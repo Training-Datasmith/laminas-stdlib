@@ -4,18 +4,20 @@ declare(strict_types=1);
 
 namespace LaminasTest\Stdlib;
 
+use function count;
+use function defined;
+use function glob;
+
+use const GLOB_BRACE;
+
 use Laminas\Stdlib\Exception\RuntimeException;
 use Laminas\Stdlib\Glob;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
-use function count;
-use function defined;
-use function glob;
 use function realpath;
-use function str_repeat;
 
-use const GLOB_BRACE;
+use function str_repeat;
 
 final class GlobTest extends TestCase
 {
@@ -83,7 +85,7 @@ final class GlobTest extends TestCase
     {
         return [
             [
-                "{{,*.}alph,{,*.}bet}a",
+                '{{,*.}alph,{,*.}bet}a',
                 [
                     'alpha',
                     'eta.alpha',

@@ -4,13 +4,14 @@ declare(strict_types=1);
 
 namespace LaminasTest\Stdlib;
 
+use const E_USER_WARNING;
+
 use ErrorException;
 use Laminas\Stdlib\ErrorHandler;
+
 use PHPUnit\Framework\TestCase;
 
 use function trigger_error;
-
-use const E_USER_WARNING;
 
 final class ErrorHandlerTest extends TestCase
 {

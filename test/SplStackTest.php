@@ -4,12 +4,14 @@ declare(strict_types=1);
 
 namespace LaminasTest\Stdlib;
 
+use function count;
+use function iterator_to_array;
+
 use Laminas\Stdlib\SplStack;
+
 use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\TestCase;
 
-use function count;
-use function iterator_to_array;
 use function serialize;
 use function unserialize;
 use function var_export;

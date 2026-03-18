@@ -4,9 +4,8 @@ declare(strict_types=1);
 
 namespace Laminas\Stdlib;
 
-use Traversable;
-
 use function array_shift;
+
 use function assert;
 use function get_object_vars;
 use function is_array;
@@ -17,6 +16,9 @@ use function preg_replace_callback;
 use function sprintf;
 use function str_replace;
 use function strtolower;
+
+use Traversable;
+
 use function ucwords;
 
 /**

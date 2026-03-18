@@ -4,14 +4,16 @@ declare(strict_types=1);
 
 namespace LaminasTest\Stdlib\TestAsset;
 
-use Iterator;
-use ReturnTypeWillChange;
-
 use function current;
 use function is_array;
+
+use Iterator;
+
 use function key;
 use function next;
 use function reset;
+
+use ReturnTypeWillChange;
 
 final class ArrayObjectIterator implements Iterator
 {

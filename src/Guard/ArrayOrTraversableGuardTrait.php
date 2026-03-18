@@ -5,12 +5,15 @@ declare(strict_types=1);
 namespace Laminas\Stdlib\Guard;
 
 use Exception;
-use Laminas\Stdlib\Exception\InvalidArgumentException;
-use Traversable;
 
 use function get_debug_type;
 use function is_array;
+
+use Laminas\Stdlib\Exception\InvalidArgumentException;
+
 use function sprintf;
+
+use Traversable;
 
 /**
  * Provide a guard method for array or Traversable data
@@ -33,7 +36,7 @@ trait ArrayOrTraversableGuardTrait
     ) {
         if (! is_array($data) && ! $data instanceof Traversable) {
             $message = sprintf(
-                "%s must be an array or Traversable, [%s] given",
+                '%s must be an array or Traversable, [%s] given',
                 $dataName,
                 get_debug_type($data)
             );

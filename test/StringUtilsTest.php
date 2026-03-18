@@ -4,7 +4,12 @@ declare(strict_types=1);
 
 namespace LaminasTest\Stdlib;
 
+use function defined;
+
 use Exception;
+
+use function extension_loaded;
+
 use Laminas\Stdlib\ErrorHandler;
 use Laminas\Stdlib\StringUtils;
 use Laminas\Stdlib\StringWrapper\Iconv;
@@ -12,11 +17,10 @@ use Laminas\Stdlib\StringWrapper\Intl;
 use Laminas\Stdlib\StringWrapper\MbString;
 use Laminas\Stdlib\StringWrapper\Native;
 use Laminas\Stdlib\StringWrapper\StringWrapperInterface;
+
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
-use function defined;
-use function extension_loaded;
 use function preg_match;
 
 final class StringUtilsTest extends TestCase
@@ -107,7 +111,7 @@ final class StringUtilsTest extends TestCase
                 || extension_loaded('mbstring')
                 || extension_loaded('iconv')
             ) {
-                $this->fail("Failed to get intl, mbstring or iconv wrapper for UTF-8");
+                $this->fail('Failed to get intl, mbstring or iconv wrapper for UTF-8');
             }
         }
 
@@ -120,7 +124,7 @@ final class StringUtilsTest extends TestCase
             }
         } catch (Exception) {
             if (extension_loaded('mbstring') || extension_loaded('iconv')) {
-                $this->fail("Failed to get mbstring or iconv wrapper for UTF-8 and ISO-8859-1");
+                $this->fail('Failed to get mbstring or iconv wrapper for UTF-8 and ISO-8859-1');
             }
         }
     }

@@ -5,29 +5,41 @@ declare(strict_types=1);
 namespace LaminasTest\Stdlib;
 
 use ArrayIterator;
-use Closure;
-use InvalidArgumentException;
-use Laminas\Stdlib\ArrayObject;
-use PHPUnit\Framework\Attributes\Group;
-use PHPUnit\Framework\TestCase;
-use RecursiveArrayIterator;
-use TypeError;
 
 use function asort;
+
+use Closure;
+
+use const E_DEPRECATED;
+use const E_USER_DEPRECATED;
+
+use InvalidArgumentException;
+
 use function ksort;
+
+use Laminas\Stdlib\ArrayObject;
+
 use function natcasesort;
 use function natsort;
+
+use PHPUnit\Framework\Attributes\Group;
+use PHPUnit\Framework\TestCase;
+
 use function preg_replace;
+
+use RecursiveArrayIterator;
+
 use function restore_error_handler;
 use function serialize;
 use function set_error_handler;
 use function strcasecmp;
+
+use TypeError;
+
 use function uasort;
+
 use function uksort;
 use function unserialize;
-
-use const E_DEPRECATED;
-use const E_USER_DEPRECATED;
 
 final class ArrayObjectTest extends TestCase
 {
@@ -171,7 +183,7 @@ final class ArrayObjectTest extends TestCase
     public function testExchangeArrayPhpArrayObject(): void
     {
         $ar  = new ArrayObject(['foo' => 'bar']);
-        $old = $this->assertExchangeArrayDeprecation(static fn()
+        $old = $this->assertExchangeArrayDeprecation(static fn ()
             => $ar->exchangeArray(new \ArrayObject(['bar' => 'baz'])));
 
         self::assertSame(['foo' => 'bar'], $old);
@@ -181,7 +193,7 @@ final class ArrayObjectTest extends TestCase
     public function testExchangeArrayStdlibArrayObject(): void
     {
         $ar  = new ArrayObject(['foo' => 'bar']);
-        $old = $this->assertExchangeArrayDeprecation(static fn()
+        $old = $this->assertExchangeArrayDeprecation(static fn ()
             => $ar->exchangeArray(new ArrayObject(['bar' => 'baz'])));
 
         self::assertSame(['foo' => 'bar'], $old);
@@ -207,7 +219,7 @@ final class ArrayObjectTest extends TestCase
     public function testExchangeArrayTestAssetIterator(): void
     {
         $ar = new ArrayObject();
-        $this->assertExchangeArrayDeprecation(static fn()
+        $this->assertExchangeArrayDeprecation(static fn ()
             => $ar->exchangeArray(new TestAsset\ArrayObjectIterator(['foo' => 'bar'])));
 
         // make sure it does what php array object does:
@@ -224,7 +236,7 @@ final class ArrayObjectTest extends TestCase
     {
         $ar = new ArrayObject();
 
-        $this->assertExchangeArrayDeprecation(static fn()
+        $this->assertExchangeArrayDeprecation(static fn ()
             => $ar->exchangeArray(new ArrayIterator(['foo' => 'bar'])));
 
         self::assertEquals(['foo' => 'bar'], $ar->getArrayCopy());
@@ -408,7 +420,7 @@ final class ArrayObjectTest extends TestCase
 
     public function testUasort(): void
     {
-        $function = static fn($a, $b): int => $a <=> $b;
+        $function = static fn ($a, $b): int => $a <=> $b;
         // phpcs:ignore Generic.Files.LineLength.TooLong
         $ar     = new ArrayObject(['a' => 4, 'b' => 8, 'c' => -1, 'd' => -9, 'e' => 2, 'f' => 5, 'g' => 3, 'h' => -4]);
         $sorted = $ar->getArrayCopy();

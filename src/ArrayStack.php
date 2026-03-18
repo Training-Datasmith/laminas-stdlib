@@ -4,11 +4,12 @@ declare(strict_types=1);
 
 namespace Laminas\Stdlib;
 
+use function array_reverse;
+
 use ArrayIterator;
 use ArrayObject as PhpArrayObject;
-use ReturnTypeWillChange;
 
-use function array_reverse;
+use ReturnTypeWillChange;
 
 /**
  * ArrayObject that acts as a stack with regards to iteration

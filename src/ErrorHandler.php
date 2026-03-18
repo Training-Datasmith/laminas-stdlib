@@ -1,18 +1,22 @@
-<?php // phpcs:disable WebimpressCodingStandard.NamingConventions.AbstractClass.Prefix
+<?php
 
+// phpcs:disable WebimpressCodingStandard.NamingConventions.AbstractClass.Prefix
 
 declare(strict_types=1);
 
 namespace Laminas\Stdlib;
 
-use ErrorException;
-
 use function array_pop;
+
 use function count;
-use function restore_error_handler;
-use function set_error_handler;
 
 use const E_WARNING;
+
+use ErrorException;
+
+use function restore_error_handler;
+
+use function set_error_handler;
 
 /**
  * ErrorHandler that can be used to catch internal PHP errors

@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace LaminasTest\Stdlib\StringWrapper;
 
-use Laminas\Stdlib\StringWrapper\Native;
-
 use function array_shift;
+
+use Laminas\Stdlib\StringWrapper\Native;
 
 final class NativeTest extends CommonStringWrapperTestCase
 {

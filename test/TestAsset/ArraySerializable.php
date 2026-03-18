@@ -16,10 +16,10 @@ final class ArraySerializable implements ArraySerializableInterface
     public function __construct()
     {
         $this->data = [
-            "foo"   => "bar",
-            "bar"   => "foo",
-            "blubb" => "baz",
-            "quo"   => "blubb",
+            'foo'   => 'bar',
+            'bar'   => 'foo',
+            'blubb' => 'baz',
+            'quo'   => 'blubb',
         ];
     }
 

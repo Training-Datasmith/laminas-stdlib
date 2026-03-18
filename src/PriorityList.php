@@ -4,16 +4,22 @@ declare(strict_types=1);
 
 namespace Laminas\Stdlib;
 
-use Countable;
-use Exception;
-use Iterator;
-use ReturnTypeWillChange;
-
 use function array_map;
+
+use Countable;
+
 use function current;
+
+use Exception;
+
+use Iterator;
+
 use function key;
 use function next;
 use function reset;
+
+use ReturnTypeWillChange;
+
 use function uasort;
 
 /**
@@ -272,7 +278,7 @@ class PriorityList implements Iterator, Countable
         }
 
         return array_map(
-            static fn(array $item) => $flag === self::EXTR_PRIORITY ? $item['priority'] : $item['data'],
+            static fn (array $item) => $flag === self::EXTR_PRIORITY ? $item['priority'] : $item['data'],
             $this->items
         );
     }

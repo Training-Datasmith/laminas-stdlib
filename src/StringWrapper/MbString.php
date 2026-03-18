@@ -4,11 +4,13 @@ declare(strict_types=1);
 
 namespace Laminas\Stdlib\StringWrapper;
 
-use Laminas\Stdlib\Exception;
-
 use function array_map;
+
 use function array_search;
 use function extension_loaded;
+
+use Laminas\Stdlib\Exception;
+
 use function mb_convert_encoding;
 use function mb_list_encodings;
 use function mb_strlen;

@@ -1,19 +1,16 @@
-<?php // phpcs:disable WebimpressCodingStandard.NamingConventions.AbstractClass.Prefix
+<?php
 
+// phpcs:disable WebimpressCodingStandard.NamingConventions.AbstractClass.Prefix
 
 declare(strict_types=1);
 
 namespace Laminas\Stdlib;
 
-use Iterator;
-use Laminas\Stdlib\ArrayUtils\MergeRemoveKey;
-use Laminas\Stdlib\ArrayUtils\MergeReplaceKeyInterface;
-use Traversable;
-
 use function array_filter;
 use function array_key_exists;
 use function array_keys;
 use function array_values;
+
 use function in_array;
 use function is_array;
 use function is_callable;
@@ -22,9 +19,18 @@ use function is_int;
 use function is_object;
 use function is_scalar;
 use function is_string;
+
+use Iterator;
+
 use function iterator_to_array;
+
+use Laminas\Stdlib\ArrayUtils\MergeRemoveKey;
+use Laminas\Stdlib\ArrayUtils\MergeReplaceKeyInterface;
+
 use function method_exists;
 use function sprintf;
+
+use Traversable;
 
 /**
  * Utility class for testing and manipulation of PHP arrays.

@@ -5,22 +5,30 @@ declare(strict_types=1);
 namespace Laminas\Stdlib;
 
 use Countable;
-use Iterator;
-use ReturnTypeWillChange;
-use Serializable;
-use SplPriorityQueue as PhpSplPriorityQueue;
-use UnexpectedValueException;
 
 use function current;
 use function in_array;
 use function is_array;
 use function is_int;
+
+use Iterator;
+
 use function key;
 use function max;
 use function next;
 use function reset;
+
+use ReturnTypeWillChange;
+use Serializable;
+
 use function serialize;
+
+use SplPriorityQueue as PhpSplPriorityQueue;
+
 use function sprintf;
+
+use UnexpectedValueException;
+
 use function unserialize;
 
 /**
@@ -357,7 +365,7 @@ class FastPriorityQueue implements Iterator, Countable, Serializable
     {
         $this->extractFlag = match ($flag) {
             self::EXTR_DATA, self::EXTR_PRIORITY, self::EXTR_BOTH => $flag,
-            default => throw new Exception\InvalidArgumentException("The extract flag specified is not valid"),
+            default => throw new Exception\InvalidArgumentException('The extract flag specified is not valid'),
         };
     }
 

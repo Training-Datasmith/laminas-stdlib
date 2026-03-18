@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace LaminasTest\Stdlib\StringWrapper;
 
-use Laminas\Stdlib\Exception;
-use Laminas\Stdlib\StringWrapper\Intl;
-
 use function array_shift;
 use function extension_loaded;
+
+use Laminas\Stdlib\Exception;
+use Laminas\Stdlib\StringWrapper\Intl;
 
 final class IntlTest extends CommonStringWrapperTestCase
 {

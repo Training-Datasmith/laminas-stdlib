@@ -4,14 +4,16 @@ declare(strict_types=1);
 
 namespace LaminasTest\Stdlib\StringWrapper;
 
-use Laminas\Stdlib\Exception;
-use Laminas\Stdlib\StringWrapper\Iconv;
-
 use function array_shift;
 use function extension_loaded;
+
 use function file_exists;
 use function file_get_contents;
 use function is_readable;
+
+use Laminas\Stdlib\Exception;
+use Laminas\Stdlib\StringWrapper\Iconv;
+
 use function stripos;
 
 final class IconvTest extends CommonStringWrapperTestCase

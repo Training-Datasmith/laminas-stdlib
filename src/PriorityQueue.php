@@ -4,17 +4,23 @@ declare(strict_types=1);
 
 namespace Laminas\Stdlib;
 
-use Countable;
-use IteratorAggregate;
-use ReturnTypeWillChange;
-use Serializable;
-use UnexpectedValueException;
-
 use function array_map;
 use function count;
+
+use Countable;
+
 use function is_array;
+
+use IteratorAggregate;
+
+use ReturnTypeWillChange;
+use Serializable;
+
 use function serialize;
 use function sprintf;
+
+use UnexpectedValueException;
+
 use function unserialize;
 
 /**
@@ -251,12 +257,12 @@ class PriorityQueue implements Countable, IteratorAggregate, Serializable
         $this->__unserialize($toUnserialize);
     }
 
-   /**
-    * Magic method used to rebuild an instance.
-    *
-    * @param list<array{data: TValue, priority: TPriority}> $data Data array.
-    * @return void
-    */
+    /**
+     * Magic method used to rebuild an instance.
+     *
+     * @param list<array{data: TValue, priority: TPriority}> $data Data array.
+     * @return void
+     */
     public function __unserialize($data)
     {
         foreach ($data as $item) {
@@ -283,8 +289,8 @@ class PriorityQueue implements Countable, IteratorAggregate, Serializable
     {
         return match ($flag) {
             self::EXTR_BOTH => $this->items,
-            self::EXTR_PRIORITY => array_map(static fn(array $item): int => $item['priority'], $this->items),
-            default => array_map(static fn(array $item): mixed => $item['data'], $this->items),
+            self::EXTR_PRIORITY => array_map(static fn (array $item): int => $item['priority'], $this->items),
+            default => array_map(static fn (array $item): mixed => $item['data'], $this->items),
         };
     }
 

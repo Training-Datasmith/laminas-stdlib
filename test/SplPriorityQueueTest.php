@@ -4,14 +4,18 @@ declare(strict_types=1);
 
 namespace LaminasTest\Stdlib;
 
-use Laminas\Stdlib\SplPriorityQueue;
-use PHPUnit\Framework\Attributes\Group;
-use PHPUnit\Framework\TestCase;
-use Traversable;
-
 use function array_values;
 use function iterator_to_array;
+
+use Laminas\Stdlib\SplPriorityQueue;
+use PHPUnit\Framework\Attributes\Group;
+
+use PHPUnit\Framework\TestCase;
+
 use function serialize;
+
+use Traversable;
+
 use function unserialize;
 use function var_export;
 

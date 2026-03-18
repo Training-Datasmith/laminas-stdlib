@@ -4,13 +4,14 @@ declare(strict_types=1);
 
 namespace LaminasTest\Stdlib;
 
-use Laminas\Stdlib\PriorityList;
-use PHPUnit\Framework\Attributes\Group;
-use PHPUnit\Framework\TestCase;
-use stdClass;
-
 use function array_keys;
 use function iterator_to_array;
+
+use Laminas\Stdlib\PriorityList;
+use PHPUnit\Framework\Attributes\Group;
+
+use PHPUnit\Framework\TestCase;
+use stdClass;
 
 final class PriorityListTest extends TestCase
 {

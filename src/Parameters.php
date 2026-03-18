@@ -5,10 +5,12 @@ declare(strict_types=1);
 namespace Laminas\Stdlib;
 
 use ArrayObject as PhpArrayObject;
-use ReturnTypeWillChange;
 
 use function http_build_query;
+
 use function parse_str;
+
+use ReturnTypeWillChange;
 
 /**
  * @template TKey of array-key

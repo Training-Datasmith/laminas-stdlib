@@ -4,12 +4,13 @@ declare(strict_types=1);
 
 namespace Laminas\Stdlib\StringWrapper;
 
-use Laminas\Stdlib\Exception;
-
 use function extension_loaded;
+
 use function grapheme_strlen;
 use function grapheme_strpos;
 use function grapheme_substr;
+
+use Laminas\Stdlib\Exception;
 
 /** @final */
 class Intl extends AbstractStringWrapper

@@ -4,13 +4,14 @@ declare(strict_types=1);
 
 namespace Laminas\Stdlib;
 
-use Traversable;
-
 use function array_key_exists;
+
 use function get_debug_type;
 use function is_array;
 use function is_scalar;
 use function sprintf;
+
+use Traversable;
 
 class Message implements MessageInterface
 {

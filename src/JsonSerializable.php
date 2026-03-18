@@ -1,5 +1,6 @@
-<?php // phpcs:disable WebimpressCodingStandard.NamingConventions.Interface.Suffix
+<?php
 
+// phpcs:disable WebimpressCodingStandard.NamingConventions.Interface.Suffix
 
 declare(strict_types=1);
 

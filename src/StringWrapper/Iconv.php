@@ -4,14 +4,15 @@ declare(strict_types=1);
 
 namespace Laminas\Stdlib\StringWrapper;
 
-use Laminas\Stdlib\Exception;
-
 use function assert;
+
 use function extension_loaded;
 use function iconv;
 use function iconv_strlen;
 use function iconv_strpos;
 use function iconv_substr;
+
+use Laminas\Stdlib\Exception;
 
 /** @final */
 class Iconv extends AbstractStringWrapper

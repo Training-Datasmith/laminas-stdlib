@@ -4,13 +4,15 @@ declare(strict_types=1);
 
 namespace LaminasTest\Stdlib\TestAsset;
 
-use Iterator;
-use ReturnTypeWillChange;
-
 use function current;
+
+use Iterator;
+
 use function key;
 use function next;
 use function reset;
+
+use ReturnTypeWillChange;
 
 final class IteratorWithToArrayMethod implements Iterator
 {

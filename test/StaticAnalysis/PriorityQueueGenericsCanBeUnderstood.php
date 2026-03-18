@@ -4,10 +4,11 @@ declare(strict_types=1);
 
 namespace LaminasTest\Stdlib\StaticAnalysis;
 
-use Laminas\Stdlib\PriorityQueue;
-
 use function array_values;
+
 use function iterator_to_array;
+
+use Laminas\Stdlib\PriorityQueue;
 
 final class PriorityQueueGenericsCanBeUnderstood
 {

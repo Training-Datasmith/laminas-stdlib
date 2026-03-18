@@ -4,13 +4,16 @@ declare(strict_types=1);
 
 namespace Laminas\Stdlib;
 
+use function is_array;
+
 use ReturnTypeWillChange;
 use Serializable;
-use UnexpectedValueException;
 
-use function is_array;
 use function serialize;
 use function sprintf;
+
+use UnexpectedValueException;
+
 use function unserialize;
 
 /**
@@ -77,12 +80,12 @@ class SplQueue extends \SplQueue implements Serializable
         $this->__unserialize($toUnserialize);
     }
 
-   /**
-    * Magic method used to rebuild an instance.
-    *
-    * @param array<array-key, TValue> $data Data array.
-    * @return void
-    */
+    /**
+     * Magic method used to rebuild an instance.
+     *
+     * @param array<array-key, TValue> $data Data array.
+     * @return void
+     */
     #[ReturnTypeWillChange]
     public function __unserialize($data)
     {

@@ -4,13 +4,14 @@ declare(strict_types=1);
 
 namespace LaminasTest\Stdlib;
 
+use function feof;
+use function fopen;
+use function fread;
+
 use Laminas\Stdlib\ConsoleHelper;
 use PHPUnit\Framework\TestCase;
 use ReflectionProperty;
 
-use function feof;
-use function fopen;
-use function fread;
 use function rewind;
 
 final class ConsoleHelperTest extends TestCase

@@ -4,18 +4,23 @@ declare(strict_types=1);
 
 namespace Laminas\Stdlib;
 
+use const DIRECTORY_SEPARATOR;
+
 use function function_exists;
 use function fwrite;
 use function getenv;
+
+use const PHP_EOL;
+
 use function posix_isatty;
 use function preg_replace;
-use function sprintf;
-use function str_replace;
 
-use const DIRECTORY_SEPARATOR;
-use const PHP_EOL;
+use function sprintf;
+
 use const STDERR;
 use const STDOUT;
+
+use function str_replace;
 
 /**
  * Utilities for console tooling.

@@ -1,9 +1,16 @@
-<?php // phpcs:disable WebimpressCodingStandard.NamingConventions.AbstractClass.Prefix
+<?php
 
+// phpcs:disable WebimpressCodingStandard.NamingConventions.AbstractClass.Prefix
 
 declare(strict_types=1);
 
 namespace Laminas\Stdlib;
+
+use function array_search;
+use function defined;
+use function extension_loaded;
+use function in_array;
+use function is_string;
 
 use Laminas\Stdlib\StringWrapper\Iconv;
 use Laminas\Stdlib\StringWrapper\Intl;
@@ -11,11 +18,6 @@ use Laminas\Stdlib\StringWrapper\MbString;
 use Laminas\Stdlib\StringWrapper\Native;
 use Laminas\Stdlib\StringWrapper\StringWrapperInterface;
 
-use function array_search;
-use function defined;
-use function extension_loaded;
-use function in_array;
-use function is_string;
 use function preg_match;
 use function strtoupper;
 

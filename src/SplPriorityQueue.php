@@ -4,18 +4,21 @@ declare(strict_types=1);
 
 namespace Laminas\Stdlib;
 
-use ReturnTypeWillChange;
-use Serializable;
-use UnexpectedValueException;
-
 use function array_key_exists;
 use function get_debug_type;
 use function is_array;
-use function serialize;
-use function sprintf;
-use function unserialize;
 
 use const PHP_INT_MAX;
+
+use ReturnTypeWillChange;
+use Serializable;
+
+use function serialize;
+use function sprintf;
+
+use UnexpectedValueException;
+
+use function unserialize;
 
 /**
  * Serializable version of SplPriorityQueue

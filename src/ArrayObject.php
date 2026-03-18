@@ -5,20 +5,21 @@ declare(strict_types=1);
 namespace Laminas\Stdlib;
 
 use AllowDynamicProperties;
-use ArrayAccess;
-use ArrayIterator;
-use Countable;
-use Iterator;
-use IteratorAggregate;
-use ReturnTypeWillChange;
-use Serializable;
-use UnexpectedValueException;
 
 use function array_key_exists;
 use function array_keys;
+
+use ArrayAccess;
+use ArrayIterator;
+
 use function asort;
 use function class_exists;
 use function count;
+
+use Countable;
+
+use const E_USER_DEPRECATED;
+
 use function get_debug_type;
 use function get_object_vars;
 use function gettype;
@@ -27,18 +28,27 @@ use function is_array;
 use function is_callable;
 use function is_object;
 use function is_string;
+
+use Iterator;
+use IteratorAggregate;
+
 use function ksort;
 use function natcasesort;
 use function natsort;
+
+use ReturnTypeWillChange;
+use Serializable;
+
 use function serialize;
 use function sprintf;
 use function str_starts_with;
 use function trigger_error;
 use function uasort;
 use function uksort;
-use function unserialize;
 
-use const E_USER_DEPRECATED;
+use UnexpectedValueException;
+
+use function unserialize;
 
 /**
  * Custom framework ArrayObject implementation

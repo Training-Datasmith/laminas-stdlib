@@ -160,7 +160,7 @@ abstract class CommonStringWrapperTestCase extends TestCase
             'cut-multi-line' => ['utf-8', 'äbüöc ß äbüöcß', 2, ' ', true, 'äb üö c ß äb üö cß'],
             'cut-multi-line-short-words' => ['utf-8', 'Ä very long wöööööööööööörd.', 8, "\n", true, "Ä very\nlong\nwööööööö\nööööörd."],
             'cut-multi-line-with-previous-new-lines' => ['utf-8', "Ä very\nlong wöööööööööööörd.", 8, "\n", false, "Ä very\nlong\nwöööööööööööörd."],
-            'long-break' => ['utf-8', "Ä very<br>long wöö<br>öööööööö<br>öörd.", 8, '<br>', false, "Ä very<br>long wöö<br>öööööööö<br>öörd."],
+            'long-break' => ['utf-8', 'Ä very<br>long wöö<br>öööööööö<br>öörd.', 8, '<br>', false, 'Ä very<br>long wöö<br>öööööööö<br>öörd.'],
             // Alternative cut tests
             'cut-beginning-single-space' => ['utf-8', ' äüöäöü', 3, ' ', true, ' äüö äöü'],
             'cut-ending-single-space' => ['utf-8', 'äüöäöü ', 3, ' ', true, 'äüö äöü '],
@@ -217,7 +217,7 @@ abstract class CommonStringWrapperTestCase extends TestCase
             $this->fail("Can't instantiate wrapper");
         }
         $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage("Cannot force cut when width is zero");
+        $this->expectExceptionMessage('Cannot force cut when width is zero');
         $wrapper->wordWrap('a', 0, "\n", true);
     }
 
