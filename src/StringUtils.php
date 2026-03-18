@@ -103,9 +103,8 @@ abstract class StringUtils
      * Register a string wrapper class
      *
      * @param class-string<StringWrapperInterface> $wrapper
-     * @return void
      */
-    public static function registerWrapper($wrapper)
+    public static function registerWrapper($wrapper): void
     {
         $wrapper = (string) $wrapper;
         // using getRegisteredWrappers() here to ensure that the list is initialized
@@ -118,9 +117,8 @@ abstract class StringUtils
      * Unregister a string wrapper class
      *
      * @param class-string<StringWrapperInterface> $wrapper
-     * @return void
      */
-    public static function unregisterWrapper($wrapper)
+    public static function unregisterWrapper($wrapper): void
     {
         // using getRegisteredWrappers() here to ensure that the list is initialized
         $index = array_search((string) $wrapper, static::getRegisteredWrappers(), true);
@@ -131,10 +129,8 @@ abstract class StringUtils
 
     /**
      * Reset all registered wrappers so the default wrappers will be used
-     *
-     * @return void
      */
-    public static function resetRegisteredWrappers()
+    public static function resetRegisteredWrappers(): void
     {
         static::$wrapperRegistry = null;
     }
@@ -148,7 +144,7 @@ abstract class StringUtils
      * @return StringWrapperInterface
      * @throws Exception\RuntimeException If no wrapper supports given character encodings.
      */
-    public static function getWrapper($encoding = 'UTF-8', $convertEncoding = null)
+    public static function getWrapper(string $encoding = 'UTF-8', $convertEncoding = null)
     {
         foreach (static::getRegisteredWrappers() as $wrapperClass) {
             if ($wrapperClass::isSupported($encoding, $convertEncoding)) {

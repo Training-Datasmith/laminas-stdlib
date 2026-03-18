@@ -26,7 +26,7 @@ class SplStack extends \SplStack implements Serializable
      *
      * @return list<TValue>
      */
-    public function toArray()
+    public function toArray(): array
     {
         $array = [];
         foreach ($this as $item) {
@@ -61,10 +61,9 @@ class SplStack extends \SplStack implements Serializable
      * Unserialize
      *
      * @param  string $data
-     * @return void
      */
     #[ReturnTypeWillChange]
-    public function unserialize($data)
+    public function unserialize($data): void
     {
         $toUnserialize = unserialize($data);
         if (! is_array($toUnserialize)) {

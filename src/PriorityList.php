@@ -72,9 +72,8 @@ class PriorityList implements Iterator, Countable
      * @param TKey   $name
      * @param TValue $value
      * @param int    $priority
-     * @return void
      */
-    public function insert($name, mixed $value, $priority = 0)
+    public function insert($name, mixed $value, $priority = 0): void
     {
         if (! isset($this->items[$name])) {
             $this->count++;
@@ -95,7 +94,7 @@ class PriorityList implements Iterator, Countable
      * @return $this
      * @throws Exception
      */
-    public function setPriority($name, $priority)
+    public function setPriority($name, $priority): static
     {
         if (! isset($this->items[$name])) {
             throw new Exception("item $name not found");
@@ -111,9 +110,8 @@ class PriorityList implements Iterator, Countable
      * Remove a item.
      *
      * @param  TKey $name
-     * @return void
      */
-    public function remove($name)
+    public function remove($name): void
     {
         if (isset($this->items[$name])) {
             $this->count--;
@@ -124,10 +122,8 @@ class PriorityList implements Iterator, Countable
 
     /**
      * Remove all items.
-     *
-     * @return void
      */
-    public function clear()
+    public function clear(): void
     {
         $this->items  = [];
         $this->serial = 0;
@@ -158,7 +154,7 @@ class PriorityList implements Iterator, Countable
     protected function sort()
     {
         if (! $this->sorted) {
-            uasort($this->items, [$this, 'compare']);
+            uasort($this->items, $this->compare(...));
             $this->sorted = true;
         }
     }
@@ -169,7 +165,7 @@ class PriorityList implements Iterator, Countable
      * @param  array $item1,
      * @return int
      */
-    protected function compare(array $item1, array $item2)
+    protected function compare(array $item1, array $item2): int|float
     {
         return $item1['priority'] === $item2['priority']
             ? ($item1['serial'] > $item2['serial'] ? -1 : 1) * $this->isLIFO
@@ -180,9 +176,8 @@ class PriorityList implements Iterator, Countable
      * Get/Set serial order mode
      *
      * @param bool|null $flag
-     * @return bool
      */
-    public function isLIFO($flag = null)
+    public function isLIFO($flag = null): bool
     {
         if ($flag !== null) {
             $isLifo = $flag === true ? 1 : -1;
@@ -200,7 +195,7 @@ class PriorityList implements Iterator, Countable
      * {@inheritDoc}
      */
     #[ReturnTypeWillChange]
-    public function rewind()
+    public function rewind(): void
     {
         $this->sort();
         reset($this->items);
@@ -248,10 +243,7 @@ class PriorityList implements Iterator, Countable
         return current($this->items) !== false;
     }
 
-    /**
-     * @return self
-     */
-    public function getIterator()
+    public function getIterator(): static
     {
         return clone $this;
     }
@@ -280,7 +272,7 @@ class PriorityList implements Iterator, Countable
         }
 
         return array_map(
-            static fn($item) => $flag === self::EXTR_PRIORITY ? $item['priority'] : $item['data'],
+            static fn(array $item) => $flag === self::EXTR_PRIORITY ? $item['priority'] : $item['data'],
             $this->items
         );
     }

@@ -35,7 +35,7 @@ class MbString extends AbstractStringWrapper
     public static function getSupportedEncodings()
     {
         if (static::$encodings === null) {
-            static::$encodings = array_map('strtoupper', mb_list_encodings());
+            static::$encodings = array_map(strtoupper(...), mb_list_encodings());
 
             // FIXME: Converting € (UTF-8) to ISO-8859-16 gives a wrong result
             $indexIso885916 = array_search('ISO-8859-16', static::$encodings, true);
@@ -67,7 +67,7 @@ class MbString extends AbstractStringWrapper
      * @param string $str
      * @return int|false
      */
-    public function strlen($str)
+    public function strlen($str): int
     {
         return mb_strlen($str, $this->getEncoding());
     }
@@ -80,7 +80,7 @@ class MbString extends AbstractStringWrapper
      * @param int|null $length
      * @return string|false
      */
-    public function substr($str, $offset = 0, $length = null)
+    public function substr($str, $offset = 0, $length = null): string
     {
         return mb_substr($str, $offset, $length, $this->getEncoding());
     }
@@ -93,7 +93,7 @@ class MbString extends AbstractStringWrapper
      * @param int    $offset
      * @return int|false
      */
-    public function strpos($haystack, $needle, $offset = 0)
+    public function strpos($haystack, $needle, $offset = 0): int|false
     {
         return mb_strpos($haystack, $needle, $offset, $this->getEncoding());
     }

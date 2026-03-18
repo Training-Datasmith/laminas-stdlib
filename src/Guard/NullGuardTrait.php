@@ -25,7 +25,7 @@ trait NullGuardTrait
      */
     protected function guardAgainstNull(
         mixed $data,
-        $dataName = 'Argument',
+        string $dataName = 'Argument',
         $exceptionClass = InvalidArgumentException::class
     ) {
         if (null === $data) {

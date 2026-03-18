@@ -30,9 +30,8 @@ class Native extends AbstractStringWrapper
      *
      * @param  string      $encoding
      * @param  string|null $convertEncoding
-     * @return bool
      */
-    public static function isSupported($encoding, $convertEncoding = null)
+    public static function isSupported($encoding, $convertEncoding = null): bool
     {
         $encodingUpper      = strtoupper($encoding);
         $supportedEncodings = static::getSupportedEncodings();
@@ -66,7 +65,7 @@ class Native extends AbstractStringWrapper
      * @param string|null $convertEncoding  The character encoding to convert to
      * @return StringWrapperInterface
      */
-    public function setEncoding($encoding, $convertEncoding = null)
+    public function setEncoding($encoding, $convertEncoding = null): static
     {
         $supportedEncodings = static::getSupportedEncodings();
 
@@ -103,7 +102,7 @@ class Native extends AbstractStringWrapper
      * @param string $str
      * @return int|false
      */
-    public function strlen($str)
+    public function strlen($str): int
     {
         return strlen($str);
     }
@@ -116,7 +115,7 @@ class Native extends AbstractStringWrapper
      * @param int|null $length
      * @return string|false
      */
-    public function substr($str, $offset = 0, $length = null)
+    public function substr($str, $offset = 0, $length = null): string
     {
         return substr($str, $offset, $length);
     }
@@ -129,7 +128,7 @@ class Native extends AbstractStringWrapper
      * @param int    $offset
      * @return int|false
      */
-    public function strpos($haystack, $needle, $offset = 0)
+    public function strpos($haystack, $needle, $offset = 0): int|false
     {
         return strpos($haystack, $needle, $offset);
     }

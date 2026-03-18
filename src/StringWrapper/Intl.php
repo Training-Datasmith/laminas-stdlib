@@ -51,7 +51,7 @@ class Intl extends AbstractStringWrapper
      * @param string $str
      * @return false|int
      */
-    public function strlen($str)
+    public function strlen($str): int|false
     {
         $len = grapheme_strlen($str);
         return $len ?? false;
@@ -65,7 +65,7 @@ class Intl extends AbstractStringWrapper
      * @param int|null $length
      * @return string|false
      */
-    public function substr($str, $offset = 0, $length = null)
+    public function substr($str, $offset = 0, $length = null): string|false
     {
         // Due fix of PHP #62759 The third argument returns an empty string if is 0 or null.
         if ($length !== null) {
@@ -83,7 +83,7 @@ class Intl extends AbstractStringWrapper
      * @param int    $offset
      * @return int|false
      */
-    public function strpos($haystack, $needle, $offset = 0)
+    public function strpos($haystack, $needle, $offset = 0): int|false
     {
         return grapheme_strpos($haystack, $needle, $offset);
     }

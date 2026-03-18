@@ -102,7 +102,7 @@ abstract class AbstractOptions implements ParameterObjectInterface
             if ($key === '__strictMode__') {
                 continue;
             }
-            $normalizedKey = preg_replace_callback('/([A-Z])/', $transform, $key);
+            $normalizedKey = preg_replace_callback('/([A-Z])/', $transform, (string) $key);
             assert(is_string($normalizedKey));
             $array[$normalizedKey] = $value;
         }

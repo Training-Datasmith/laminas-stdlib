@@ -185,10 +185,9 @@ abstract class Glob
      *
      * @param  string  $pattern
      * @param  int $begin
-     * @param  int $flags
      * @return int|null
      */
-    protected static function nextBraceSub($pattern, $begin, $flags)
+    protected static function nextBraceSub($pattern, $begin, int $flags)
     {
         $length  = strlen($pattern);
         $depth   = 0;

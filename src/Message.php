@@ -31,7 +31,7 @@ class Message implements MessageInterface
      * @throws Exception\InvalidArgumentException
      * @return $this
      */
-    public function setMetadata($spec, $value = null)
+    public function setMetadata($spec, $value = null): static
     {
         if (is_scalar($spec)) {
             $this->metadata[$spec] = $value;
@@ -78,9 +78,8 @@ class Message implements MessageInterface
      * Set message content
      *
      * @param  mixed $value
-     * @return Message
      */
-    public function setContent($value)
+    public function setContent($value): static
     {
         $this->content = $value;
         return $this;
@@ -96,10 +95,7 @@ class Message implements MessageInterface
         return $this->content;
     }
 
-    /**
-     * @return string
-     */
-    public function toString()
+    public function toString(): string
     {
         $request = '';
         foreach ($this->getMetadata() as $key => $value) {
@@ -109,7 +105,6 @@ class Message implements MessageInterface
                 (string) $value
             );
         }
-        $request .= "\r\n" . $this->getContent();
-        return $request;
+        return $request . ("\r\n" . $this->getContent());
     }
 }

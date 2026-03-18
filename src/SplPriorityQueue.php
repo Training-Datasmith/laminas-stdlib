@@ -40,10 +40,9 @@ class SplPriorityQueue extends \SplPriorityQueue implements Serializable
      *
      * @param  TValue    $value
      * @param  TPriority $priority
-     * @return void
      */
     #[ReturnTypeWillChange] // Inherited return type should be bool
-    public function insert($value, $priority)
+    public function insert($value, $priority): void
     {
         if (! is_array($priority)) {
             $priority = [$priority, $this->serial--];
@@ -59,7 +58,7 @@ class SplPriorityQueue extends \SplPriorityQueue implements Serializable
      *
      * @return list<TValue>
      */
-    public function toArray()
+    public function toArray(): array
     {
         $array = [];
         foreach (clone $this as $item) {
@@ -100,9 +99,8 @@ class SplPriorityQueue extends \SplPriorityQueue implements Serializable
      * Deserialize
      *
      * @param  string $data
-     * @return void
      */
-    public function unserialize($data)
+    public function unserialize($data): void
     {
         $toUnserialize = unserialize($data);
         if (! is_array($toUnserialize)) {

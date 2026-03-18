@@ -231,7 +231,7 @@ class Iconv extends AbstractStringWrapper
      * @param string $str
      * @return int|false
      */
-    public function strlen($str)
+    public function strlen($str): int|false
     {
         return iconv_strlen($str, $this->getEncoding());
     }
@@ -244,7 +244,7 @@ class Iconv extends AbstractStringWrapper
      * @param int|null $length
      * @return string|false
      */
-    public function substr($str, $offset = 0, $length = null)
+    public function substr($str, $offset = 0, $length = null): string|false
     {
         $length ??= $this->strlen($str);
         assert($length !== false);
@@ -260,7 +260,7 @@ class Iconv extends AbstractStringWrapper
      * @param int    $offset
      * @return int|false
      */
-    public function strpos($haystack, $needle, $offset = 0)
+    public function strpos($haystack, $needle, $offset = 0): int|false
     {
         $encoding = $this->getEncoding();
         assert($encoding !== null);

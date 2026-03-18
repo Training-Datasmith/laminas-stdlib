@@ -38,9 +38,8 @@ class Parameters extends PhpArrayObject implements ParametersInterface
      * Populate from native PHP array
      *
      * @param array<TKey, TValue> $values
-     * @return void
      */
-    public function fromArray(array $values)
+    public function fromArray(array $values): void
     {
         $this->exchangeArray($values);
     }
@@ -49,9 +48,8 @@ class Parameters extends PhpArrayObject implements ParametersInterface
      * Populate from query string
      *
      * @param  string $string
-     * @return void
      */
-    public function fromString($string)
+    public function fromString($string): void
     {
         $array = [];
         parse_str($string, $array);
@@ -63,17 +61,15 @@ class Parameters extends PhpArrayObject implements ParametersInterface
      *
      * @return array<TKey, TValue>
      */
-    public function toArray()
+    public function toArray(): array
     {
         return $this->getArrayCopy();
     }
 
     /**
      * Serialize to query string
-     *
-     * @return string
      */
-    public function toString()
+    public function toString(): string
     {
         return http_build_query($this->toArray());
     }
@@ -115,7 +111,7 @@ class Parameters extends PhpArrayObject implements ParametersInterface
      * @param TValue $value
      * @return $this
      */
-    public function set($name, $value)
+    public function set($name, $value): static
     {
         $this[$name] = $value;
         return $this;

@@ -28,7 +28,7 @@ trait ArrayOrTraversableGuardTrait
      */
     protected function guardForArrayOrTraversable(
         mixed $data,
-        $dataName = 'Argument',
+        string $dataName = 'Argument',
         $exceptionClass = InvalidArgumentException::class
     ) {
         if (! is_array($data) && ! $data instanceof Traversable) {

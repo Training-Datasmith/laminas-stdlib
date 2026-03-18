@@ -70,7 +70,7 @@ class PriorityQueue implements Countable, IteratorAggregate, Serializable
      * @param  TPriority $priority
      * @return $this
      */
-    public function insert($data, $priority = 1)
+    public function insert($data, $priority = 1): static
     {
         /** @psalm-var TPriority $priority */
         $priority      = (int) $priority;
@@ -97,7 +97,7 @@ class PriorityQueue implements Countable, IteratorAggregate, Serializable
      *
      * @return bool False if the item was not found, true otherwise.
      */
-    public function remove(mixed $datum)
+    public function remove(mixed $datum): bool
     {
         $found = false;
         $key   = null;
@@ -124,10 +124,8 @@ class PriorityQueue implements Countable, IteratorAggregate, Serializable
 
     /**
      * Is the queue empty?
-     *
-     * @return bool
      */
-    public function isEmpty()
+    public function isEmpty(): bool
     {
         return 0 === $this->count();
     }
@@ -237,9 +235,8 @@ class PriorityQueue implements Countable, IteratorAggregate, Serializable
      * Serialization format is compatible with {@link SplPriorityQueue}
      *
      * @param  string $data
-     * @return void
      */
-    public function unserialize($data)
+    public function unserialize($data): void
     {
         $toUnserialize = unserialize($data);
         if (! is_array($toUnserialize)) {
@@ -286,8 +283,8 @@ class PriorityQueue implements Countable, IteratorAggregate, Serializable
     {
         return match ($flag) {
             self::EXTR_BOTH => $this->items,
-            self::EXTR_PRIORITY => array_map(static fn($item): int => $item['priority'], $this->items),
-            default => array_map(static fn($item): mixed => $item['data'], $this->items),
+            self::EXTR_PRIORITY => array_map(static fn(array $item): int => $item['priority'], $this->items),
+            default => array_map(static fn(array $item): mixed => $item['data'], $this->items),
         };
     }
 
@@ -300,7 +297,7 @@ class PriorityQueue implements Countable, IteratorAggregate, Serializable
      * @param  class-string<\SplPriorityQueue> $class
      * @return $this
      */
-    public function setInternalQueueClass($class)
+    public function setInternalQueueClass($class): static
     {
         /** @psalm-suppress RedundantCastGivenDocblockType */
         $this->queueClass = (string) $class;
@@ -311,9 +308,8 @@ class PriorityQueue implements Countable, IteratorAggregate, Serializable
      * Does the queue contain the given datum?
      *
      * @param  TValue $datum
-     * @return bool
      */
-    public function contains($datum)
+    public function contains($datum): bool
     {
         foreach ($this->items as $item) {
             if ($item['data'] === $datum) {
@@ -327,9 +323,8 @@ class PriorityQueue implements Countable, IteratorAggregate, Serializable
      * Does the queue have an item with the given priority?
      *
      * @param  TPriority $priority
-     * @return bool
      */
-    public function hasPriority($priority)
+    public function hasPriority($priority): bool
     {
         foreach ($this->items as $item) {
             if ($item['priority'] === $priority) {
@@ -367,8 +362,6 @@ class PriorityQueue implements Countable, IteratorAggregate, Serializable
 
     /**
      * Add support for deep cloning
-     *
-     * @return void
      */
     public function __clone()
     {

@@ -65,9 +65,6 @@ class ArrayObject implements IteratorAggregate, ArrayAccess, Serializable, Count
      */
     public const ARRAY_AS_PROPS = 2;
 
-    /** @var array<TKey, TValue> */
-    protected $storage;
-
     /** @var self::STD_PROP_LIST|self::ARRAY_AS_PROPS */
     protected $flag;
 
@@ -75,17 +72,16 @@ class ArrayObject implements IteratorAggregate, ArrayAccess, Serializable, Count
     protected $iteratorClass;
 
     /** @var list<string> */
-    protected $protectedProperties;
+    protected array $protectedProperties;
 
     /**
-     * @param array<TKey, TValue>|object               $input Object values must act like ArrayAccess
+     * @param array<TKey, TValue>|object $storage Object values must act like ArrayAccess
      * @param self::STD_PROP_LIST|self::ARRAY_AS_PROPS $flags
      * @param class-string<Iterator>                   $iteratorClass
      */
-    public function __construct($input = [], $flags = self::STD_PROP_LIST, $iteratorClass = ArrayIterator::class)
+    public function __construct(protected $storage = [], $flags = self::STD_PROP_LIST, $iteratorClass = ArrayIterator::class)
     {
         $this->setFlags($flags);
-        $this->storage = $input;
         $this->setIteratorClass($iteratorClass);
         $this->protectedProperties = array_keys(get_object_vars($this));
     }
@@ -156,7 +152,7 @@ class ArrayObject implements IteratorAggregate, ArrayAccess, Serializable, Count
      * @param TKey $key
      * @return TValue|null
      */
-    public function &__get(mixed $key)
+    public function &__get(mixed $key): mixed
     {
         if ($this->flag === self::ARRAY_AS_PROPS) {
             $ret = &$this->offsetGet($key);
@@ -175,19 +171,16 @@ class ArrayObject implements IteratorAggregate, ArrayAccess, Serializable, Count
      * Appends the value
      *
      * @param TValue $value
-     * @return void
      */
-    public function append(mixed $value)
+    public function append(mixed $value): void
     {
         $this->storage[] = $value;
     }
 
     /**
      * Sort the entries by value
-     *
-     * @return void
      */
-    public function asort()
+    public function asort(): void
     {
         asort($this->storage);
     }
@@ -288,30 +281,24 @@ class ArrayObject implements IteratorAggregate, ArrayAccess, Serializable, Count
 
     /**
      * Sort the entries by key
-     *
-     * @return void
      */
-    public function ksort()
+    public function ksort(): void
     {
         ksort($this->storage);
     }
 
     /**
      * Sort an array using a case insensitive "natural order" algorithm
-     *
-     * @return void
      */
-    public function natcasesort()
+    public function natcasesort(): void
     {
         natcasesort($this->storage);
     }
 
     /**
      * Sort entries using a "natural order" algorithm
-     *
-     * @return void
      */
-    public function natsort()
+    public function natsort(): void
     {
         natsort($this->storage);
     }
@@ -351,10 +338,9 @@ class ArrayObject implements IteratorAggregate, ArrayAccess, Serializable, Count
      *
      * @param TKey $offset
      * @param TValue $value
-     * @return void
      */
     #[ReturnTypeWillChange]
-    public function offsetSet(mixed $offset, mixed $value)
+    public function offsetSet(mixed $offset, mixed $value): void
     {
         $this->storage[$offset] = $value;
     }
@@ -363,10 +349,9 @@ class ArrayObject implements IteratorAggregate, ArrayAccess, Serializable, Count
      * Unsets the value at the specified key
      *
      * @param TKey $offset
-     * @return void
      */
     #[ReturnTypeWillChange]
-    public function offsetUnset(mixed $offset)
+    public function offsetUnset(mixed $offset): void
     {
         if ($this->offsetExists($offset)) {
             unset($this->storage[$offset]);
@@ -397,9 +382,8 @@ class ArrayObject implements IteratorAggregate, ArrayAccess, Serializable, Count
      * Sets the behavior flags
      *
      * @param self::STD_PROP_LIST|self::ARRAY_AS_PROPS $flags
-     * @return void
      */
-    public function setFlags($flags)
+    public function setFlags($flags): void
     {
         $this->flag = $flags;
     }
@@ -408,9 +392,8 @@ class ArrayObject implements IteratorAggregate, ArrayAccess, Serializable, Count
      * Sets the iterator classname for the ArrayObject
      *
      * @param  class-string<Iterator> $class
-     * @return void
      */
-    public function setIteratorClass($class)
+    public function setIteratorClass($class): void
     {
         if (class_exists($class)) {
             $this->iteratorClass = $class;
@@ -434,9 +417,8 @@ class ArrayObject implements IteratorAggregate, ArrayAccess, Serializable, Count
      * Sort the entries with a user-defined comparison function and maintain key association
      *
      * @param  callable(TValue, TValue): int $function
-     * @return void
      */
-    public function uasort($function)
+    public function uasort($function): void
     {
         if (is_callable($function)) {
             uasort($this->storage, $function);
@@ -447,9 +429,8 @@ class ArrayObject implements IteratorAggregate, ArrayAccess, Serializable, Count
      * Sort the entries by keys using a user-defined comparison function
      *
      * @param  callable(TKey, TKey): int $function
-     * @return void
      */
-    public function uksort($function)
+    public function uksort($function): void
     {
         if (is_callable($function)) {
             uksort($this->storage, $function);
@@ -460,9 +441,8 @@ class ArrayObject implements IteratorAggregate, ArrayAccess, Serializable, Count
      * Unserialize an ArrayObject
      *
      * @param  string $data
-     * @return void
      */
-    public function unserialize($data)
+    public function unserialize($data): void
     {
         $toUnserialize = unserialize($data);
         if (! is_array($toUnserialize)) {
@@ -481,7 +461,7 @@ class ArrayObject implements IteratorAggregate, ArrayAccess, Serializable, Count
      * @param array $data Data array.
      * @return void
      */
-    public function __unserialize($data)
+    public function __unserialize(array $data)
     {
         $this->protectedProperties = array_keys(get_object_vars($this));
 

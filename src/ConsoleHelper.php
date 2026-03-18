@@ -56,7 +56,7 @@ class ConsoleHelper
     /** @var resource Exists only for testing. */
     private $stderr = STDERR;
 
-    private bool $supportsColor;
+    private readonly bool $supportsColor;
 
     /**
      * @param resource $resource
@@ -91,9 +91,8 @@ class ConsoleHelper
      * @param string $string
      * @param bool $colorize Whether or not to colorize the string
      * @param resource $resource Defaults to STDOUT
-     * @return void
      */
-    public function write($string, $colorize = true, $resource = STDOUT)
+    public function write($string, $colorize = true, $resource = STDOUT): void
     {
         if ($colorize) {
             $string = $this->colorize($string);
@@ -105,12 +104,10 @@ class ConsoleHelper
     }
 
     /**
-     * @param string $string
      * @param bool $colorize Whether or not to colorize the line
      * @param resource $resource Defaults to STDOUT
-     * @return void
      */
-    public function writeLine($string, $colorize = true, $resource = STDOUT)
+    public function writeLine(string $string, $colorize = true, $resource = STDOUT): void
     {
         $this->write($string . $this->eol, $colorize, $resource);
     }
@@ -121,11 +118,8 @@ class ConsoleHelper
      * Wraps the message in `<error></error>`, and passes it to `writeLine()`,
      * using STDERR as the resource; emits an additional empty line when done,
      * also to STDERR.
-     *
-     * @param string $message
-     * @return void
      */
-    public function writeErrorMessage($message)
+    public function writeErrorMessage(string $message): void
     {
         $this->writeLine(sprintf('<error>%s</error>', $message), true, $this->stderr);
         $this->writeLine('', false, $this->stderr);
@@ -133,9 +127,8 @@ class ConsoleHelper
 
     /**
      * @param resource $resource
-     * @return bool
      */
-    private function detectColorCapabilities($resource = STDOUT)
+    private function detectColorCapabilities($resource = STDOUT): bool
     {
         if ('\\' === DIRECTORY_SEPARATOR) {
             // Windows
@@ -151,9 +144,8 @@ class ConsoleHelper
      * Ensure newlines are appropriate for the current terminal.
      *
      * @param string $string
-     * @return string
      */
-    private function formatNewlines($string)
+    private function formatNewlines($string): string
     {
         $string = str_replace($this->eol, "\0PHP_EOL\0", $string);
         $string = (string) preg_replace("/(\r\n|\n|\r)/", $this->eol, $string);
