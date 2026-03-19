@@ -454,7 +454,7 @@ class ArrayObject implements IteratorAggregate, ArrayAccess, Serializable, Count
      */
     public function unserialize($data): void
     {
-        $toUnserialize = unserialize($data);
+        $toUnserialize = unserialize($data, ['allowed_classes' => [self::class]]);
         if (! is_array($toUnserialize)) {
             throw new UnexpectedValueException(sprintf(
                 'Cannot deserialize %s instance; corrupt serialization data',
