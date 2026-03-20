@@ -24,8 +24,7 @@
             "dealerdirect/phpcodesniffer-composer-installer": true
         }
     },
-    "extra": {
-    },
+    "extra": [],
     "require": {
         "php": "~8.2.0 || ~8.3.0 || ~8.4.0 || ~8.5.0"
     },
@@ -43,8 +42,8 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "LaminasTest\\Stdlib\\": "test/",
-            "LaminasBench\\Stdlib\\": "benchmark/"
+            "Laminas_Test\\Stdlib\\": "test/",
+            "Laminas_Bench\\Stdlib\\": "benchmark/"
         }
     },
     "scripts": {
