@@ -1,26 +1,20 @@
 <?php
 
-declare(strict_types=1);
-
+declare (strict_types=1);
 namespace Laminas\Stdlib;
 
 use function array_key_exists;
-
 use function get_debug_type;
 use function is_array;
 use function is_scalar;
 use function sprintf;
-
 use Traversable;
-
-class Message implements MessageInterface
+class Message implements Message_Interface
 {
     /** @var array */
     protected $metadata = [];
-
     /** @var mixed */
     protected $content = '';
-
     /**
      * Set message metadata
      *
@@ -32,24 +26,20 @@ class Message implements MessageInterface
      * @throws Exception\InvalidArgumentException
      * @return $this
      */
-    public function setMetadata($spec, $value = null): static
+    public function set_metadata($spec, $value = null): static
     {
         if (is_scalar($spec)) {
             $this->metadata[$spec] = $value;
             return $this;
         }
-        if (! is_array($spec) && ! $spec instanceof Traversable) {
-            throw new Exception\InvalidArgumentException(sprintf(
-                'Expected a string, array, or Traversable argument in first position; received "%s"',
-                get_debug_type($spec)
-            ));
+        if (!is_array($spec) && !$spec instanceof Traversable) {
+            throw new Exception\InvalidArgumentException(sprintf('Expected a string, array, or Traversable argument in first position; received "%s"', get_debug_type($spec)));
         }
         foreach ($spec as $key => $value) {
             $this->metadata[$key] = $value;
         }
         return $this;
     }
-
     /**
      * Retrieve all metadata or a single metadatum as specified by key
      *
@@ -58,54 +48,44 @@ class Message implements MessageInterface
      * @throws Exception\InvalidArgumentException
      * @return mixed
      */
-    public function getMetadata($key = null, $default = null)
+    public function get_metadata($key = null, $default = null)
     {
         if (null === $key) {
             return $this->metadata;
         }
-
-        if (! is_scalar($key)) {
+        if (!is_scalar($key)) {
             throw new Exception\InvalidArgumentException('Non-scalar argument provided for key');
         }
-
         if (array_key_exists($key, $this->metadata)) {
             return $this->metadata[$key];
         }
-
         return $default;
     }
-
     /**
      * Set message content
      *
      * @param  mixed $value
      */
-    public function setContent($value): static
+    public function set_content($value): static
     {
         $this->content = $value;
         return $this;
     }
-
     /**
      * Get message content
      *
      * @return mixed
      */
-    public function getContent()
+    public function get_content()
     {
         return $this->content;
     }
-
-    public function toString(): string
+    public function to_string(): string
     {
         $request = '';
-        foreach ($this->getMetadata() as $key => $value) {
-            $request .= sprintf(
-                "%s: %s\r\n",
-                (string) $key,
-                (string) $value
-            );
+        foreach ($this->get_metadata() as $key => $value) {
+            $request .= sprintf("%s: %s\r\n", (string) $key, (string) $value);
         }
-        return $request . ("\r\n" . $this->getContent());
+        return $request . ("\r\n" . $this->get_content());
     }
 }

@@ -1,22 +1,20 @@
 <?php
 
-declare(strict_types=1);
-
+declare (strict_types=1);
 namespace Laminas\Stdlib;
 
-interface ArraySerializableInterface
+interface Array_Serializable_Interface
 {
     /**
      * Exchange internal values from provided array
      *
      * @return void
      */
-    public function exchangeArray(array $array);
-
+    public function exchange_array(array $array);
     /**
      * Return an array representation of the object
      *
      * @return array
      */
-    public function getArrayCopy();
+    public function get_array_copy();
 }

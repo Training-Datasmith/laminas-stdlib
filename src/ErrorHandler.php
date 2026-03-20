@@ -1,28 +1,20 @@
 <?php
 
 // phpcs:disable WebimpressCodingStandard.NamingConventions.AbstractClass.Prefix
-
-declare(strict_types=1);
-
+declare (strict_types=1);
 namespace Laminas\Stdlib;
 
 use function array_pop;
-
 use function count;
-
 use const E_WARNING;
-
 use ErrorException;
-
 use function restore_error_handler;
-
 use function set_error_handler;
-
 /**
  * ErrorHandler that can be used to catch internal PHP errors
  * and convert to an ErrorException instance.
  */
-abstract class ErrorHandler
+abstract class Error_Handler
 {
     /**
      * Active stack
@@ -30,7 +22,6 @@ abstract class ErrorHandler
      * @var list<ErrorException|null>
      */
     protected static $stack = [];
-
     /**
      * Check if this error handler is active
      *
@@ -38,33 +29,29 @@ abstract class ErrorHandler
      */
     public static function started()
     {
-        return (bool) static::getNestedLevel();
+        return (bool) static::get_nested_level();
     }
-
     /**
      * Get the current nested level
      *
      * @return int
      */
-    public static function getNestedLevel()
+    public static function get_nested_level()
     {
         return count(static::$stack);
     }
-
     /**
      * Starting the error handler
      *
      * @param int $errorLevel
      */
-    public static function start($errorLevel = E_WARNING): void
+    public static function start($error_level = E_WARNING): void
     {
-        if (! static::$stack) {
-            set_error_handler(static::addError(...), $errorLevel);
+        if (!static::$stack) {
+            set_error_handler(static::add_error(...), $error_level);
         }
-
         static::$stack[] = null;
     }
-
     /**
      * Stopping the error handler
      *
@@ -74,23 +61,18 @@ abstract class ErrorHandler
      */
     public static function stop($throw = false)
     {
-        $errorException = null;
-
+        $error_exception = null;
         if (static::$stack) {
-            $errorException = array_pop(static::$stack);
-
-            if (! static::$stack) {
+            $error_exception = array_pop(static::$stack);
+            if (!static::$stack) {
                 restore_error_handler();
             }
-
-            if ($errorException && $throw) {
-                throw $errorException;
+            if ($error_exception && $throw) {
+                throw $error_exception;
             }
         }
-
-        return $errorException;
+        return $error_exception;
     }
-
     /**
      * Stop all active handler
      */
@@ -99,10 +81,8 @@ abstract class ErrorHandler
         if (static::$stack) {
             restore_error_handler();
         }
-
         static::$stack = [];
     }
-
     /**
      * Add an error to the stack
      *
@@ -111,9 +91,9 @@ abstract class ErrorHandler
      * @param string $errfile
      * @param int    $errline
      */
-    public static function addError($errno, $errstr = '', $errfile = '', $errline = 0): void
+    public static function add_error($errno, $errstr = '', $errfile = '', $errline = 0): void
     {
-        $stack = &static::$stack[count(static::$stack) - 1];
+        $stack =& static::$stack[count(static::$stack) - 1];
         $stack = new ErrorException($errstr, 0, $errno, $errfile, $errline, $stack);
     }
 }

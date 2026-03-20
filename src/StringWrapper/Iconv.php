@@ -1,21 +1,17 @@
 <?php
 
-declare(strict_types=1);
-
-namespace Laminas\Stdlib\StringWrapper;
+declare (strict_types=1);
+namespace Laminas\Stdlib\String_Wrapper;
 
 use function assert;
-
 use function extension_loaded;
 use function iconv;
 use function iconv_strlen;
 use function iconv_strpos;
 use function iconv_substr;
-
 use Laminas\Stdlib\Exception;
-
 /** @final */
-class Iconv extends AbstractStringWrapper
+class Iconv extends Abstract_String_Wrapper
 {
     /**
      * List of supported character sets (upper case)
@@ -61,7 +57,6 @@ class Iconv extends AbstractStringWrapper
         'MACGREEK',
         'MACTURKISH',
         'MACINTOSH',
-
         // Semitic languages
         'ISO-8859-6',
         'ISO-8859-8',
@@ -70,7 +65,6 @@ class Iconv extends AbstractStringWrapper
         'CP862',
         'MACHEBREW',
         'MACARABIC',
-
         // Japanese
         'EUC-JP',
         'SHIFT_JIS',
@@ -78,7 +72,6 @@ class Iconv extends AbstractStringWrapper
         'ISO-2022-JP',
         'ISO-2022-JP-2',
         'ISO-2022-JP-1',
-
         // Chinese
         'EUC-CN',
         'HZ',
@@ -94,46 +87,36 @@ class Iconv extends AbstractStringWrapper
         'BIG5-HKSCS:1999',
         'ISO-2022-CN',
         'ISO-2022-CN-EXT',
-
         // Korean
         'EUC-KR',
         'CP949',
         'ISO-2022-KR',
         'JOHAB',
-
         // Armenian
         'ARMSCII-8',
-
         // Georgian
         'GEORGIAN-ACADEMY',
         'GEORGIAN-PS',
-
         // Tajik
         'KOI8-T',
-
         // Kazakh
         'PT154',
         'RK1048',
-
         // Thai
         'ISO-8859-11',
         'TIS-620',
         'CP874',
         'MACTHAI',
-
         // Laotian
         'MULELAO-1',
         'CP1133',
-
         // Vietnamese
         'VISCII',
         'TCVN',
         'CP1258',
-
         // Platform specifics
         'HP-ROMAN8',
         'NEXTSTEP',
-
         // Full Unicode
         'UTF-8',
         'UCS-2',
@@ -151,22 +134,19 @@ class Iconv extends AbstractStringWrapper
         'UTF-7',
         'C99',
         'JAVA',
-
         /* Commented out because that's internal encodings not existing in real world
-        // Full Unicode, in terms of uint16_t or uint32_t (with machine dependent endianness and alignment)
-        'UCS-2-INTERNAL',
-        'UCS-4-INTERNAL',
-
-        // Locale dependent, in terms of `char' or `wchar_t' (with machine dependent endianness and alignment,
-        // and with OS and locale dependent semantics)
-        'char',
-        'wchar_t',
-        '', // The empty encoding name is equivalent to "char": it denotes the locale dependent character encoding.
-        */
-
+                // Full Unicode, in terms of uint16_t or uint32_t (with machine dependent endianness and alignment)
+                'UCS-2-INTERNAL',
+                'UCS-4-INTERNAL',
+        
+                // Locale dependent, in terms of `char' or `wchar_t' (with machine dependent endianness and alignment,
+                // and with OS and locale dependent semantics)
+                'char',
+                'wchar_t',
+                '', // The empty encoding name is equivalent to "char": it denotes the locale dependent character encoding.
+                */
         // When configured with the option --enable-extra-encodings,
         // it also provides support for a few extra encodings:
-
         // European languages
         'CP437',
         'CP737',
@@ -182,36 +162,30 @@ class Iconv extends AbstractStringWrapper
         'CP865',
         'CP869',
         'CP1125',
-
         // Semitic languages
         'CP864',
-
         // Japanese
         'EUC-JISX0213',
         'Shift_JISX0213',
         'ISO-2022-JP-3',
-
         // Chinese
-        'BIG5-2003', // (experimental)
-
+        'BIG5-2003',
+        // (experimental)
         // Turkmen
         'TDS565',
-
         // Platform specifics
         'ATARIST',
         'RISCOS-LATIN1',
     ];
-
     /**
      * Get a list of supported character encodings
      *
      * @return string[]
      */
-    public static function getSupportedEncodings()
+    public static function get_supported_encodings()
     {
         return static::$encodings;
     }
-
     /**
      * Constructor
      *
@@ -219,13 +193,10 @@ class Iconv extends AbstractStringWrapper
      */
     public function __construct()
     {
-        if (! extension_loaded('iconv')) {
-            throw new Exception\ExtensionNotLoadedException(
-                'PHP extension "iconv" is required for this wrapper'
-            );
+        if (!extension_loaded('iconv')) {
+            throw new Exception\Extension_Not_Loaded_Exception('PHP extension "iconv" is required for this wrapper');
         }
     }
-
     /**
      * Returns the length of the given string
      *
@@ -234,9 +205,8 @@ class Iconv extends AbstractStringWrapper
      */
     public function strlen($str): int|false
     {
-        return iconv_strlen($str, $this->getEncoding());
+        return iconv_strlen($str, $this->get_encoding());
     }
-
     /**
      * Returns the portion of string specified by the start and length parameters
      *
@@ -249,10 +219,8 @@ class Iconv extends AbstractStringWrapper
     {
         $length ??= $this->strlen($str);
         assert($length !== false);
-
-        return iconv_substr($str, $offset, $length, $this->getEncoding());
+        return iconv_substr($str, $offset, $length, $this->get_encoding());
     }
-
     /**
      * Find the position of the first occurrence of a substring in a string
      *
@@ -263,12 +231,10 @@ class Iconv extends AbstractStringWrapper
      */
     public function strpos($haystack, $needle, $offset = 0): int|false
     {
-        $encoding = $this->getEncoding();
+        $encoding = $this->get_encoding();
         assert($encoding !== null);
-
         return iconv_strpos($haystack, $needle, $offset, $encoding);
     }
-
     /**
      * Convert a string from defined encoding to the defined convert encoding
      *
@@ -278,27 +244,21 @@ class Iconv extends AbstractStringWrapper
      */
     public function convert($str, $reverse = false)
     {
-        $encoding        = $this->getEncoding();
-        $convertEncoding = $this->getConvertEncoding();
-        if ($convertEncoding === null) {
-            throw new Exception\LogicException(
-                'No convert encoding defined'
-            );
+        $encoding = $this->get_encoding();
+        $convert_encoding = $this->get_convert_encoding();
+        if ($convert_encoding === null) {
+            throw new Exception\LogicException('No convert encoding defined');
         }
-
-        if ($encoding === $convertEncoding) {
+        if ($encoding === $convert_encoding) {
             return $str;
         }
-
-        $fromEncoding = $reverse ? $convertEncoding : $encoding;
-        $toEncoding   = $reverse ? $encoding : $convertEncoding;
-
-        if (null === $toEncoding || null === $fromEncoding) {
+        $from_encoding = $reverse ? $convert_encoding : $encoding;
+        $to_encoding = $reverse ? $encoding : $convert_encoding;
+        if (null === $to_encoding || null === $from_encoding) {
             return $str;
         }
-
         // automatically add "//IGNORE" to not stop converting on invalid characters
         // invalid characters triggers a notice anyway
-        return iconv($fromEncoding, $toEncoding . '//IGNORE', $str);
+        return iconv($from_encoding, $to_encoding . '//IGNORE', $str);
     }
 }

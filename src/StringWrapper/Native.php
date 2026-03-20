@@ -1,22 +1,17 @@
 <?php
 
-declare(strict_types=1);
-
-namespace Laminas\Stdlib\StringWrapper;
+declare (strict_types=1);
+namespace Laminas\Stdlib\String_Wrapper;
 
 use function in_array;
-
 use Laminas\Stdlib\Exception;
-
-use Laminas\Stdlib\StringUtils;
-
+use Laminas\Stdlib\String_Utils;
 use function strlen;
 use function strpos;
 use function strtoupper;
 use function substr;
-
 /** @final */
-class Native extends AbstractStringWrapper
+class Native extends Abstract_String_Wrapper
 {
     /**
      * The character encoding working on
@@ -25,7 +20,6 @@ class Native extends AbstractStringWrapper
      * @var string
      */
     protected $encoding = 'ASCII';
-
     /**
      * Check if the given character encoding is supported by this wrapper
      * and the character encoding to convert to is also supported.
@@ -33,33 +27,28 @@ class Native extends AbstractStringWrapper
      * @param  string      $encoding
      * @param  string|null $convertEncoding
      */
-    public static function isSupported($encoding, $convertEncoding = null): bool
+    public static function is_supported($encoding, $convert_encoding = null): bool
     {
-        $encodingUpper      = strtoupper($encoding);
-        $supportedEncodings = static::getSupportedEncodings();
-
-        if (! in_array($encodingUpper, $supportedEncodings)) {
+        $encoding_upper = strtoupper($encoding);
+        $supported_encodings = static::get_supported_encodings();
+        if (!in_array($encoding_upper, $supported_encodings)) {
             return false;
         }
-
         // This adapter doesn't support to convert between encodings
-        if ($convertEncoding !== null && $encodingUpper !== strtoupper($convertEncoding)) {
+        if ($convert_encoding !== null && $encoding_upper !== strtoupper($convert_encoding)) {
             return false;
         }
-
         return true;
     }
-
     /**
      * Get a list of supported character encodings
      *
      * @return string[]
      */
-    public static function getSupportedEncodings()
+    public static function get_supported_encodings()
     {
-        return StringUtils::getSingleByteEncodings();
+        return String_Utils::get_single_byte_encodings();
     }
-
     /**
      * Set character encoding working with and convert to
      *
@@ -67,37 +56,27 @@ class Native extends AbstractStringWrapper
      * @param string|null $convertEncoding  The character encoding to convert to
      * @return StringWrapperInterface
      */
-    public function setEncoding($encoding, $convertEncoding = null): static
+    public function set_encoding($encoding, $convert_encoding = null): static
     {
-        $supportedEncodings = static::getSupportedEncodings();
-
-        $encodingUpper = strtoupper($encoding);
-        if (! in_array($encodingUpper, $supportedEncodings)) {
-            throw new Exception\InvalidArgumentException(
-                'Wrapper doesn\'t support character encoding "' . $encoding . '"'
-            );
+        $supported_encodings = static::get_supported_encodings();
+        $encoding_upper = strtoupper($encoding);
+        if (!in_array($encoding_upper, $supported_encodings)) {
+            throw new Exception\InvalidArgumentException('Wrapper doesn\'t support character encoding "' . $encoding . '"');
         }
-
-        if (null !== $convertEncoding && $encodingUpper !== strtoupper($convertEncoding)) {
-            $this->convertEncoding = $encodingUpper;
+        if (null !== $convert_encoding && $encoding_upper !== strtoupper($convert_encoding)) {
+            $this->convert_encoding = $encoding_upper;
         }
-
-        if ($convertEncoding !== null) {
-            if ($encodingUpper !== strtoupper($convertEncoding)) {
-                throw new Exception\InvalidArgumentException(
-                    'Wrapper doesn\'t support to convert between character encodings'
-                );
+        if ($convert_encoding !== null) {
+            if ($encoding_upper !== strtoupper($convert_encoding)) {
+                throw new Exception\InvalidArgumentException('Wrapper doesn\'t support to convert between character encodings');
             }
-
-            $this->convertEncoding = $encodingUpper;
+            $this->convert_encoding = $encoding_upper;
         } else {
-            $this->convertEncoding = null;
+            $this->convert_encoding = null;
         }
-        $this->encoding = $encodingUpper;
-
+        $this->encoding = $encoding_upper;
         return $this;
     }
-
     /**
      * Returns the length of the given string
      *
@@ -108,7 +87,6 @@ class Native extends AbstractStringWrapper
     {
         return strlen($str);
     }
-
     /**
      * Returns the portion of string specified by the start and length parameters
      *
@@ -121,7 +99,6 @@ class Native extends AbstractStringWrapper
     {
         return substr($str, $offset, $length);
     }
-
     /**
      * Find the position of the first occurrence of a substring in a string
      *

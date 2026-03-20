@@ -1,14 +1,12 @@
 <?php
 
-declare(strict_types=1);
-
+declare (strict_types=1);
 namespace Laminas\Stdlib;
 
 use ArrayAccess;
 use Countable;
 use Serializable;
 use Traversable;
-
 /**
  * Basically, an ArrayObject. You could simply define something like:
  *     class QueryParams extends ArrayObject implements Parameters {}
@@ -19,7 +17,7 @@ use Traversable;
  * @template-extends ArrayAccess<TKey, TValue>
  * @template-extends Traversable<TKey, TValue>
  */
-interface ParametersInterface extends ArrayAccess, Countable, Serializable, Traversable
+interface Parameters_Interface extends ArrayAccess, Countable, Serializable, Traversable
 {
     /**
      * Constructor
@@ -27,7 +25,6 @@ interface ParametersInterface extends ArrayAccess, Countable, Serializable, Trav
      * @param array<TKey, TValue>|null $values
      */
     public function __construct(?array $values = null);
-
     /**
      * From array
      *
@@ -36,8 +33,7 @@ interface ParametersInterface extends ArrayAccess, Countable, Serializable, Trav
      * @param array<TKey, TValue> $values
      * @return mixed
      */
-    public function fromArray(array $values);
-
+    public function from_array(array $values);
     /**
      * From string
      *
@@ -46,8 +42,7 @@ interface ParametersInterface extends ArrayAccess, Countable, Serializable, Trav
      * @param string $string
      * @return mixed
      */
-    public function fromString($string);
-
+    public function from_string($string);
     /**
      * To array
      *
@@ -55,8 +50,7 @@ interface ParametersInterface extends ArrayAccess, Countable, Serializable, Trav
      *
      * @return array<TKey, TValue>
      */
-    public function toArray();
-
+    public function to_array();
     /**
      * To string
      *
@@ -64,15 +58,13 @@ interface ParametersInterface extends ArrayAccess, Countable, Serializable, Trav
      *
      * @return string
      */
-    public function toString();
-
+    public function to_string();
     /**
      * @param TKey $name
      * @param TValue|null $default
      * @return mixed
      */
     public function get($name, $default = null);
-
     /**
      * @param TKey $name
      * @param TValue $value

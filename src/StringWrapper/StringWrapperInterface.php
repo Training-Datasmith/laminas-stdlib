@@ -1,12 +1,10 @@
 <?php
 
-declare(strict_types=1);
-
-namespace Laminas\Stdlib\StringWrapper;
+declare (strict_types=1);
+namespace Laminas\Stdlib\String_Wrapper;
 
 use const STR_PAD_RIGHT;
-
-interface StringWrapperInterface
+interface String_Wrapper_Interface
 {
     /**
      * Check if the given character encoding is supported by this wrapper
@@ -16,15 +14,13 @@ interface StringWrapperInterface
      * @param string|null $convertEncoding
      * @return bool
      */
-    public static function isSupported($encoding, $convertEncoding = null);
-
+    public static function is_supported($encoding, $convert_encoding = null);
     /**
      * Get a list of supported character encodings
      *
      * @return string[]
      */
-    public static function getSupportedEncodings();
-
+    public static function get_supported_encodings();
     /**
      * Set character encoding working with and convert to
      *
@@ -32,22 +28,19 @@ interface StringWrapperInterface
      * @param string|null $convertEncoding  The character encoding to convert to
      * @return StringWrapperInterface
      */
-    public function setEncoding($encoding, $convertEncoding = null);
-
+    public function set_encoding($encoding, $convert_encoding = null);
     /**
      * Get the defined character encoding to work with (upper case)
      *
      * @return string|null
      */
-    public function getEncoding();
-
+    public function get_encoding();
     /**
      * Get the defined character encoding to convert to (upper case)
      *
      * @return string|null
      */
-    public function getConvertEncoding();
-
+    public function get_convert_encoding();
     /**
      * Returns the length of the given string
      *
@@ -55,7 +48,6 @@ interface StringWrapperInterface
      * @return int|false
      */
     public function strlen($str);
-
     /**
      * Returns the portion of string specified by the start and length parameters
      *
@@ -65,7 +57,6 @@ interface StringWrapperInterface
      * @return string|false
      */
     public function substr($str, $offset = 0, $length = null);
-
     /**
      * Find the position of the first occurrence of a substring in a string
      *
@@ -75,7 +66,6 @@ interface StringWrapperInterface
      * @return int|false
      */
     public function strpos($haystack, $needle, $offset = 0);
-
     /**
      * Convert a string from defined encoding to the defined convert encoding
      *
@@ -84,7 +74,6 @@ interface StringWrapperInterface
      * @return string|false
      */
     public function convert($str, $reverse = false);
-
     /**
      * Wraps a string to a given number of characters
      *
@@ -94,8 +83,7 @@ interface StringWrapperInterface
      * @param  bool $cut
      * @return string
      */
-    public function wordWrap($str, $width = 75, $break = "\n", $cut = false);
-
+    public function word_wrap($str, $width = 75, $break = "\n", $cut = false);
     /**
      * Pad a string to a certain length with another string
      *
@@ -105,5 +93,5 @@ interface StringWrapperInterface
      * @param  int $padType
      * @return string
      */
-    public function strPad($input, $padLength, $padString = ' ', $padType = STR_PAD_RIGHT);
+    public function str_pad($input, $pad_length, $pad_string = ' ', $pad_type = STR_PAD_RIGHT);
 }

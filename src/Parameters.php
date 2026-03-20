@@ -1,24 +1,19 @@
 <?php
 
-declare(strict_types=1);
-
+declare (strict_types=1);
 namespace Laminas\Stdlib;
 
 use ArrayObject as PhpArrayObject;
-
 use function http_build_query;
-
 use function parse_str;
-
-use ReturnTypeWillChange;
-
+use Return_Type_Will_Change;
 /**
  * @template TKey of array-key
  * @template TValue
  * @template-extends PhpArrayObject<TKey, TValue>
  * @template-implements ParametersInterface<TKey, TValue>
  */
-class Parameters extends PhpArrayObject implements ParametersInterface
+class Parameters extends Php_Array_Object implements Parameters_Interface
 {
     /**
      * Constructor
@@ -35,47 +30,42 @@ class Parameters extends PhpArrayObject implements ParametersInterface
         }
         parent::__construct($values, ArrayObject::ARRAY_AS_PROPS);
     }
-
     /**
      * Populate from native PHP array
      *
      * @param array<TKey, TValue> $values
      */
-    public function fromArray(array $values): void
+    public function from_array(array $values): void
     {
-        $this->exchangeArray($values);
+        $this->exchange_array($values);
     }
-
     /**
      * Populate from query string
      *
      * @param  string $string
      */
-    public function fromString($string): void
+    public function from_string($string): void
     {
         $array = [];
         parse_str($string, $array);
-        $this->fromArray($array);
+        $this->from_array($array);
     }
-
     /**
      * Serialize to native PHP array
      *
      * @return array<TKey, TValue>
      */
-    public function toArray(): array
+    public function to_array(): array
     {
-        return $this->getArrayCopy();
+        return $this->get_array_copy();
     }
-
     /**
      * Serialize to query string
      */
-    public function toString(): string
+    public function to_string(): string
     {
-        return http_build_query($this->toArray());
+        return http_build_query($this->to_array());
     }
-
     /**
      * Retrieve by key
      *
@@ -84,16 +74,14 @@ class Parameters extends PhpArrayObject implements ParametersInterface
      * @param  TKey $name
      * @return TValue|null
      */
-    #[ReturnTypeWillChange]
+    #[Return_Type_Will_Change]
     public function offsetGet($name)
     {
         if ($this->offsetExists($name)) {
             return parent::offsetGet($name);
         }
-
         return null;
     }
-
     /**
      * @template TDefault
      * @param TKey $name
@@ -107,7 +95,6 @@ class Parameters extends PhpArrayObject implements ParametersInterface
         }
         return $default;
     }
-
     /**
      * @param TKey   $name
      * @param TValue $value

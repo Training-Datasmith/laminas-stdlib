@@ -1,25 +1,18 @@
 <?php
 
-declare(strict_types=1);
-
+declare (strict_types=1);
 namespace Laminas\Stdlib;
 
 use function array_key_exists;
 use function get_debug_type;
 use function is_array;
-
 use const PHP_INT_MAX;
-
-use ReturnTypeWillChange;
+use Return_Type_Will_Change;
 use Serializable;
-
 use function serialize;
 use function sprintf;
-
 use UnexpectedValueException;
-
 use function unserialize;
-
 /**
  * Serializable version of SplPriorityQueue
  *
@@ -34,7 +27,6 @@ class SplPriorityQueue extends \SplPriorityQueue implements Serializable
 {
     /** @var int Seed used to ensure queue order for items of the same priority */
     protected $serial = PHP_INT_MAX;
-
     /**
      * Insert a value with a given priority
      *
@@ -44,16 +36,14 @@ class SplPriorityQueue extends \SplPriorityQueue implements Serializable
      * @param  TValue    $value
      * @param  TPriority $priority
      */
-    #[ReturnTypeWillChange] // Inherited return type should be bool
+    #[Return_Type_Will_Change]
     public function insert($value, $priority): void
     {
-        if (! is_array($priority)) {
+        if (!is_array($priority)) {
             $priority = [$priority, $this->serial--];
         }
-
         parent::insert($value, $priority);
     }
-
     /**
      * Serialize to an array
      *
@@ -61,7 +51,7 @@ class SplPriorityQueue extends \SplPriorityQueue implements Serializable
      *
      * @return list<TValue>
      */
-    public function toArray(): array
+    public function to_array(): array
     {
         $array = [];
         foreach (clone $this as $item) {
@@ -69,7 +59,6 @@ class SplPriorityQueue extends \SplPriorityQueue implements Serializable
         }
         return $array;
     }
-
     /**
      * Serialize
      *
@@ -79,25 +68,22 @@ class SplPriorityQueue extends \SplPriorityQueue implements Serializable
     {
         return serialize($this->__serialize());
     }
-
     /**
      * Magic method used for serializing of an instance.
      *
      * @return array
      */
-    #[ReturnTypeWillChange]
+    #[Return_Type_Will_Change]
     public function __serialize()
     {
         $clone = clone $this;
-        $clone->setExtractFlags(self::EXTR_BOTH);
-
+        $clone->set_extract_flags(self::EXTR_BOTH);
         $data = [];
         foreach ($clone as $item) {
             $data[] = $item;
         }
         return $data;
     }
-
     /**
      * Deserialize
      *
@@ -105,49 +91,33 @@ class SplPriorityQueue extends \SplPriorityQueue implements Serializable
      */
     public function unserialize($data): void
     {
-        $toUnserialize = unserialize($data, ['allowed_classes' => [self::class]]);
-        if (! is_array($toUnserialize)) {
-            throw new UnexpectedValueException(sprintf(
-                'Cannot deserialize %s instance; corrupt serialization data',
-                self::class
-            ));
+        $to_unserialize = unserialize($data, ['allowed_classes' => [self::class]]);
+        if (!is_array($to_unserialize)) {
+            throw new UnexpectedValueException(sprintf('Cannot deserialize %s instance; corrupt serialization data', self::class));
         }
-
-        $this->__unserialize($toUnserialize);
+        $this->__unserialize($to_unserialize);
     }
-
     /**
      * Magic method used to rebuild an instance.
      *
      * @param array<array-key, mixed> $data Data array.
      * @return void
      */
-    #[ReturnTypeWillChange]
+    #[Return_Type_Will_Change]
     public function __unserialize($data)
     {
         $this->serial = PHP_INT_MAX;
-
         foreach ($data as $item) {
-            if (! is_array($item)) {
-                throw new UnexpectedValueException(sprintf(
-                    'Cannot deserialize %s instance: corrupt item; expected array, received %s',
-                    self::class,
-                    get_debug_type($item)
-                ));
+            if (!is_array($item)) {
+                throw new UnexpectedValueException(sprintf('Cannot deserialize %s instance: corrupt item; expected array, received %s', self::class, get_debug_type($item)));
             }
-
-            if (! array_key_exists('data', $item)) {
-                throw new UnexpectedValueException(sprintf(
-                    'Cannot deserialize %s instance: corrupt item; missing "data" element',
-                    self::class
-                ));
+            if (!array_key_exists('data', $item)) {
+                throw new UnexpectedValueException(sprintf('Cannot deserialize %s instance: corrupt item; missing "data" element', self::class));
             }
-
             $priority = 1;
             if (array_key_exists('priority', $item)) {
                 $priority = (int) $item['priority'];
             }
-
             $this->insert($item['data'], $priority);
         }
     }

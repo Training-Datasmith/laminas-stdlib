@@ -1,11 +1,9 @@
 <?php
 
-declare(strict_types=1);
-
+declare (strict_types=1);
 namespace Laminas\Stdlib;
 
 use function array_shift;
-
 use function assert;
 use function get_object_vars;
 use function is_array;
@@ -16,30 +14,24 @@ use function preg_replace_callback;
 use function sprintf;
 use function str_replace;
 use function strtolower;
-
 use Traversable;
-
 use function ucwords;
-
 /**
  * @template TValue
  * @implements ParameterObjectInterface<string, TValue>
  * @psalm-no-seal-properties This class has __get() magic. It exposes protected props when there is a matching method
  */
-abstract class AbstractOptions implements ParameterObjectInterface
+abstract class Abstract_Options implements Parameter_Object_Interface
 {
     // phpcs:disable PSR2.Classes.PropertyDeclaration.Underscore,WebimpressCodingStandard.NamingConventions.ValidVariableName.NotCamelCapsProperty
-
     /**
      * We use the __ prefix to avoid collisions with properties in
      * user-implementations.
      *
      * @var bool
      */
-    protected $__strictMode__ = true;
-
+    protected $__strict_mode__ = true;
     // phpcs:enable
-
     /**
      * Constructor
      *
@@ -48,10 +40,9 @@ abstract class AbstractOptions implements ParameterObjectInterface
     public function __construct($options = null)
     {
         if (null !== $options) {
-            $this->setFromArray($options);
+            $this->set_from_array($options);
         }
     }
-
     /**
      * Set one or more configuration properties
      *
@@ -59,59 +50,43 @@ abstract class AbstractOptions implements ParameterObjectInterface
      * @throws Exception\InvalidArgumentException
      * @return AbstractOptions Provides fluent interface
      */
-    public function setFromArray($options)
+    public function set_from_array($options)
     {
         if ($options instanceof self) {
-            $options = $options->toArray();
+            $options = $options->to_array();
         }
-
-        if (! is_array($options) && ! $options instanceof Traversable) {
-            throw new Exception\InvalidArgumentException(
-                sprintf(
-                    'Parameter provided to %s must be an %s, %s or %s',
-                    __METHOD__,
-                    'array',
-                    'Traversable',
-                    self::class
-                )
-            );
+        if (!is_array($options) && !$options instanceof Traversable) {
+            throw new Exception\InvalidArgumentException(sprintf('Parameter provided to %s must be an %s, %s or %s', __METHOD__, 'array', 'Traversable', self::class));
         }
-
         foreach ($options as $key => $value) {
             $this->__set($key, $value);
         }
-
         return $this;
     }
-
     /**
      * Cast to array
      *
      * @return array<string, TValue>
      */
-    public function toArray()
+    public function to_array()
     {
         $array = [];
-
         $transform = static function (array $letters): string {
             /** @var list<string> $letters */
             $letter = array_shift($letters);
             return '_' . strtolower((string) $letter);
         };
-
         /** @psalm-var TValue $value */
         foreach (get_object_vars($this) as $key => $value) {
             if ($key === '__strictMode__') {
                 continue;
             }
-            $normalizedKey = preg_replace_callback('/([A-Z])/', $transform, (string) $key);
-            assert(is_string($normalizedKey));
-            $array[$normalizedKey] = $value;
+            $normalized_key = preg_replace_callback('/([A-Z])/', $transform, (string) $key);
+            assert(is_string($normalized_key));
+            $array[$normalized_key] = $value;
         }
-
         return $array;
     }
-
     /**
      * Set a configuration property
      *
@@ -125,23 +100,14 @@ abstract class AbstractOptions implements ParameterObjectInterface
     public function __set($key, $value)
     {
         $setter = 'set' . str_replace('_', '', $key);
-
         if (is_callable([$this, $setter])) {
             $this->{$setter}($value);
-
             return;
         }
-
-        if ($this->__strictMode__) {
-            throw new Exception\BadMethodCallException(sprintf(
-                'The option "%s" does not have a callable "%s" ("%s") setter method which must be defined',
-                $key,
-                'set' . str_replace(' ', '', ucwords(str_replace('_', ' ', $key))),
-                $setter
-            ));
+        if ($this->__strict_mode__) {
+            throw new Exception\BadMethodCallException(sprintf('The option "%s" does not have a callable "%s" ("%s") setter method which must be defined', $key, 'set' . str_replace(' ', '', ucwords(str_replace('_', ' ', $key))), $setter));
         }
     }
-
     /**
      * Get a configuration property
      *
@@ -154,18 +120,11 @@ abstract class AbstractOptions implements ParameterObjectInterface
     public function __get($key)
     {
         $getter = 'get' . str_replace('_', '', $key);
-
         if (is_callable([$this, $getter])) {
             return $this->{$getter}();
         }
-
-        throw new Exception\BadMethodCallException(sprintf(
-            'The option "%s" does not have a callable "%s" getter method which must be defined',
-            $key,
-            'get' . str_replace(' ', '', ucwords(str_replace('_', ' ', $key)))
-        ));
+        throw new Exception\BadMethodCallException(sprintf('The option "%s" does not have a callable "%s" getter method which must be defined', $key, 'get' . str_replace(' ', '', ucwords(str_replace('_', ' ', $key)))));
     }
-
     /**
      * Test if a configuration property is null
      *
@@ -177,10 +136,8 @@ abstract class AbstractOptions implements ParameterObjectInterface
     public function __isset($key)
     {
         $getter = 'get' . str_replace('_', '', $key);
-
         return method_exists($this, $getter) && null !== $this->__get($key);
     }
-
     /**
      * Set a configuration property to NULL
      *
@@ -195,12 +152,7 @@ abstract class AbstractOptions implements ParameterObjectInterface
         try {
             $this->__set($key, null);
         } catch (Exception\BadMethodCallException $e) {
-            throw new Exception\InvalidArgumentException(
-                'The class property $' . $key . ' cannot be unset as'
-                . ' NULL is an invalid value for it',
-                0,
-                $e
-            );
+            throw new Exception\InvalidArgumentException('The class property $' . $key . ' cannot be unset as' . ' NULL is an invalid value for it', 0, $e);
         }
     }
 }

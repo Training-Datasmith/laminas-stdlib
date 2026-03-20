@@ -1,12 +1,10 @@
 <?php
 
-declare(strict_types=1);
-
+declare (strict_types=1);
 namespace Laminas\Stdlib;
 
 use Traversable;
-
-interface MessageInterface
+interface Message_Interface
 {
     /**
      * Set metadata
@@ -15,28 +13,25 @@ interface MessageInterface
      * @param  mixed $value
      * @return $this
      */
-    public function setMetadata($spec, $value = null);
-
+    public function set_metadata($spec, $value = null);
     /**
      * Get metadata
      *
      * @param  null|string|int $key
      * @return mixed
      */
-    public function getMetadata($key = null);
-
+    public function get_metadata($key = null);
     /**
      * Set content
      *
      * @param  mixed $content
      * @return mixed
      */
-    public function setContent($content);
-
+    public function set_content($content);
     /**
      * Get content
      *
      * @return mixed
      */
-    public function getContent();
+    public function get_content();
 }

@@ -1,13 +1,12 @@
 <?php
 
-declare(strict_types=1);
-
+declare (strict_types=1);
 namespace Laminas\Stdlib;
 
 /**
  * Interface to allow objects to have initialization logic
  */
-interface InitializableInterface
+interface Initializable_Interface
 {
     /**
      * Init an object

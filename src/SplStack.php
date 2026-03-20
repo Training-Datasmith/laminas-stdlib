@@ -1,21 +1,15 @@
 <?php
 
-declare(strict_types=1);
-
+declare (strict_types=1);
 namespace Laminas\Stdlib;
 
 use function is_array;
-
-use ReturnTypeWillChange;
+use Return_Type_Will_Change;
 use Serializable;
-
 use function serialize;
 use function sprintf;
-
 use UnexpectedValueException;
-
 use function unserialize;
-
 /**
  * Serializable version of SplStack
  *
@@ -29,7 +23,7 @@ class SplStack extends \SplStack implements Serializable
      *
      * @return list<TValue>
      */
-    public function toArray(): array
+    public function to_array(): array
     {
         $array = [];
         foreach ($this as $item) {
@@ -37,55 +31,47 @@ class SplStack extends \SplStack implements Serializable
         }
         return $array;
     }
-
     /**
      * Serialize
      *
      * @return string
      */
-    #[ReturnTypeWillChange]
+    #[Return_Type_Will_Change]
     public function serialize()
     {
         return serialize($this->__serialize());
     }
-
     /**
      * Magic method used for serializing of an instance.
      *
      * @return list<TValue>
      */
-    #[ReturnTypeWillChange]
+    #[Return_Type_Will_Change]
     public function __serialize()
     {
-        return $this->toArray();
+        return $this->to_array();
     }
-
     /**
      * Unserialize
      *
      * @param  string $data
      */
-    #[ReturnTypeWillChange]
+    #[Return_Type_Will_Change]
     public function unserialize($data): void
     {
-        $toUnserialize = unserialize($data, ['allowed_classes' => [self::class]]);
-        if (! is_array($toUnserialize)) {
-            throw new UnexpectedValueException(sprintf(
-                'Cannot deserialize %s instance; corrupt serialization data',
-                self::class
-            ));
+        $to_unserialize = unserialize($data, ['allowed_classes' => [self::class]]);
+        if (!is_array($to_unserialize)) {
+            throw new UnexpectedValueException(sprintf('Cannot deserialize %s instance; corrupt serialization data', self::class));
         }
-
-        $this->__unserialize($toUnserialize);
+        $this->__unserialize($to_unserialize);
     }
-
     /**
      * Magic method used to rebuild an instance.
      *
      * @param array<array-key, TValue> $data Data array.
      * @return void
      */
-    #[ReturnTypeWillChange]
+    #[Return_Type_Will_Change]
     public function __unserialize($data)
     {
         foreach ($data as $item) {

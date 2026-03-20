@@ -1,19 +1,15 @@
 <?php
 
-declare(strict_types=1);
-
-namespace Laminas\Stdlib\StringWrapper;
+declare (strict_types=1);
+namespace Laminas\Stdlib\String_Wrapper;
 
 use function extension_loaded;
-
 use function grapheme_strlen;
 use function grapheme_strpos;
 use function grapheme_substr;
-
 use Laminas\Stdlib\Exception;
-
 /** @final */
-class Intl extends AbstractStringWrapper
+class Intl extends Abstract_String_Wrapper
 {
     /**
      * List of supported character sets (upper case)
@@ -21,17 +17,15 @@ class Intl extends AbstractStringWrapper
      * @var string[]
      */
     protected static $encodings = ['UTF-8'];
-
     /**
      * Get a list of supported character encodings
      *
      * @return string[]
      */
-    public static function getSupportedEncodings()
+    public static function get_supported_encodings()
     {
         return static::$encodings;
     }
-
     /**
      * Constructor
      *
@@ -39,13 +33,10 @@ class Intl extends AbstractStringWrapper
      */
     public function __construct()
     {
-        if (! extension_loaded('intl')) {
-            throw new Exception\ExtensionNotLoadedException(
-                'PHP extension "intl" is required for this wrapper'
-            );
+        if (!extension_loaded('intl')) {
+            throw new Exception\Extension_Not_Loaded_Exception('PHP extension "intl" is required for this wrapper');
         }
     }
-
     /**
      * Returns the length of the given string
      *
@@ -57,7 +48,6 @@ class Intl extends AbstractStringWrapper
         $len = grapheme_strlen($str);
         return $len ?? false;
     }
-
     /**
      * Returns the portion of string specified by the start and length parameters
      *
@@ -72,10 +62,8 @@ class Intl extends AbstractStringWrapper
         if ($length !== null) {
             return grapheme_substr($str, $offset, $length);
         }
-
         return grapheme_substr($str, $offset);
     }
-
     /**
      * Find the position of the first occurrence of a substring in a string
      *

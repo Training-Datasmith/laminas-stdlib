@@ -1,9 +1,8 @@
 <?php
 
-declare(strict_types=1);
+declare (strict_types=1);
+namespace Laminas\Stdlib\Array_Utils;
 
-namespace Laminas\Stdlib\ArrayUtils;
-
-final class MergeRemoveKey
+final class Merge_Remove_Key
 {
 }

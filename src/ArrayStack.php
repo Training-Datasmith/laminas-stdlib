@@ -1,16 +1,12 @@
 <?php
 
-declare(strict_types=1);
-
+declare (strict_types=1);
 namespace Laminas\Stdlib;
 
 use function array_reverse;
-
 use ArrayIterator;
 use ArrayObject as PhpArrayObject;
-
-use ReturnTypeWillChange;
-
+use Return_Type_Will_Change;
 /**
  * ArrayObject that acts as a stack with regards to iteration
  *
@@ -18,7 +14,7 @@ use ReturnTypeWillChange;
  * @template TValue
  * @template-extends PhpArrayObject<TKey, TValue>
  */
-class ArrayStack extends PhpArrayObject
+class Array_Stack extends Php_Array_Object
 {
     /**
      * Retrieve iterator
@@ -28,10 +24,10 @@ class ArrayStack extends PhpArrayObject
      *
      * @return ArrayIterator<TKey, TValue>
      */
-    #[ReturnTypeWillChange]
+    #[Return_Type_Will_Change]
     public function getIterator()
     {
-        $array = $this->getArrayCopy();
+        $array = $this->get_array_copy();
         return new ArrayIterator(array_reverse($array));
     }
 }

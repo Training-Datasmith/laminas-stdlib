@@ -1,15 +1,14 @@
 <?php
 
-declare(strict_types=1);
-
+declare (strict_types=1);
 namespace Laminas\Stdlib;
 
-interface DispatchableInterface
+interface Dispatchable_Interface
 {
     /**
      * Dispatch a request
      *
      * @return Response|mixed
      */
-    public function dispatch(RequestInterface $request, ?ResponseInterface $response = null);
+    public function dispatch(Request_Interface $request, ?Response_Interface $response = null);
 }

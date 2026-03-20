@@ -1,77 +1,60 @@
 <?php
 
-declare(strict_types=1);
-
+declare (strict_types=1);
 namespace Laminas\Stdlib;
 
 use function array_map;
-
 use Countable;
-
 use function current;
-
 use Exception;
-
 use Iterator;
-
 use function key;
 use function next;
 use function reset;
-
-use ReturnTypeWillChange;
-
+use Return_Type_Will_Change;
 use function uasort;
-
 /**
  * @template TKey of string
  * @template TValue of mixed
  * @template-implements Iterator<TKey, TValue>
  */
-class PriorityList implements Iterator, Countable
+class Priority_List implements Iterator, Countable
 {
-    public const EXTR_DATA     = 0x00000001;
-    public const EXTR_PRIORITY = 0x00000002;
-    public const EXTR_BOTH     = 0x00000003;
-
+    public const EXTR_DATA = 0x1;
+    public const EXTR_PRIORITY = 0x2;
+    public const EXTR_BOTH = 0x3;
     /**
      * Internal list of all items.
      *
      * @var array<TKey, array{data: TValue, priority: int, serial: positive-int|0}>
      */
     protected $items = [];
-
     /**
      * Serial assigned to items to preserve LIFO.
      *
      * @var positive-int|0
      */
     protected $serial = 0;
-
     // phpcs:disable WebimpressCodingStandard.NamingConventions.ValidVariableName.NotCamelCapsProperty
-
     /**
      * Serial order mode
      *
      * @var integer
      */
-    protected $isLIFO = 1;
-
+    protected $is_lifo = 1;
     // phpcs:enable
-
     /**
      * Internal counter to avoid usage of count().
      *
      * @var int
      */
     protected $count = 0;
-
     /**
      * Whether the list was already sorted.
      *
      * @var bool
      */
     protected $sorted = false;
-
     /**
      * Insert a new item.
      *
@@ -81,37 +64,27 @@ class PriorityList implements Iterator, Countable
      */
     public function insert($name, mixed $value, $priority = 0): void
     {
-        if (! isset($this->items[$name])) {
+        if (!isset($this->items[$name])) {
             $this->count++;
         }
-
         $this->sorted = false;
-
-        $this->items[$name] = [
-            'data'     => $value,
-            'priority' => (int) $priority,
-            'serial'   => $this->serial++,
-        ];
+        $this->items[$name] = ['data' => $value, 'priority' => (int) $priority, 'serial' => $this->serial++];
     }
-
     /**
      * @param TKey   $name
      * @param int    $priority
      * @return $this
      * @throws Exception
      */
-    public function setPriority($name, $priority): static
+    public function set_priority($name, $priority): static
     {
-        if (! isset($this->items[$name])) {
-            throw new Exception("item $name not found");
+        if (!isset($this->items[$name])) {
+            throw new Exception("item {$name} not found");
         }
-
         $this->items[$name]['priority'] = (int) $priority;
-        $this->sorted                   = false;
-
+        $this->sorted = false;
         return $this;
     }
-
     /**
      * Remove a item.
      *
@@ -122,21 +95,18 @@ class PriorityList implements Iterator, Countable
         if (isset($this->items[$name])) {
             $this->count--;
         }
-
         unset($this->items[$name]);
     }
-
     /**
      * Remove all items.
      */
     public function clear(): void
     {
-        $this->items  = [];
+        $this->items = [];
         $this->serial = 0;
-        $this->count  = 0;
+        $this->count = 0;
         $this->sorted = false;
     }
-
     /**
      * Get a item.
      *
@@ -145,13 +115,11 @@ class PriorityList implements Iterator, Countable
      */
     public function get($name)
     {
-        if (! isset($this->items[$name])) {
+        if (!isset($this->items[$name])) {
             return;
         }
-
         return $this->items[$name]['data'];
     }
-
     /**
      * Sort all items.
      *
@@ -159,12 +127,11 @@ class PriorityList implements Iterator, Countable
      */
     protected function sort()
     {
-        if (! $this->sorted) {
+        if (!$this->sorted) {
             uasort($this->items, $this->compare(...));
             $this->sorted = true;
         }
     }
-
     /**
      * Compare the priority of two items.
      *
@@ -173,113 +140,93 @@ class PriorityList implements Iterator, Countable
      */
     protected function compare(array $item1, array $item2): int|float
     {
-        return $item1['priority'] === $item2['priority']
-            ? ($item1['serial'] > $item2['serial'] ? -1 : 1) * $this->isLIFO
-            : ($item1['priority'] > $item2['priority'] ? -1 : 1);
+        return $item1['priority'] === $item2['priority'] ? ($item1['serial'] > $item2['serial'] ? -1 : 1) * $this->is_lifo : ($item1['priority'] > $item2['priority'] ? -1 : 1);
     }
-
     /**
      * Get/Set serial order mode
      *
      * @param bool|null $flag
      */
-    public function isLIFO($flag = null): bool
+    public function is_lifo($flag = null): bool
     {
         if ($flag !== null) {
-            $isLifo = $flag === true ? 1 : -1;
-
-            if ($isLifo !== $this->isLIFO) {
-                $this->isLIFO = $isLifo;
+            $is_lifo = $flag === true ? 1 : -1;
+            if ($is_lifo !== $this->is_lifo) {
+                $this->is_lifo = $is_lifo;
                 $this->sorted = false;
             }
         }
-
-        return 1 === $this->isLIFO;
+        return 1 === $this->is_lifo;
     }
-
     /**
      * {@inheritDoc}
      */
-    #[ReturnTypeWillChange]
+    #[Return_Type_Will_Change]
     public function rewind(): void
     {
         $this->sort();
         reset($this->items);
     }
-
     /**
      * {@inheritDoc}
      */
-    #[ReturnTypeWillChange]
+    #[Return_Type_Will_Change]
     public function current()
     {
         $this->sorted || $this->sort();
         $node = current($this->items);
-
         return $node ? $node['data'] : false;
     }
-
     /**
      * {@inheritDoc}
      */
-    #[ReturnTypeWillChange]
+    #[Return_Type_Will_Change]
     public function key()
     {
         $this->sorted || $this->sort();
         return key($this->items);
     }
-
     /**
      * {@inheritDoc}
      */
-    #[ReturnTypeWillChange]
+    #[Return_Type_Will_Change]
     public function next()
     {
         $node = next($this->items);
-
         return $node ? $node['data'] : false;
     }
-
     /**
      * {@inheritDoc}
      */
-    #[ReturnTypeWillChange]
+    #[Return_Type_Will_Change]
     public function valid()
     {
         return current($this->items) !== false;
     }
-
     public function getIterator(): static
     {
         return clone $this;
     }
-
     /**
      * {@inheritDoc}
      */
-    #[ReturnTypeWillChange]
+    #[Return_Type_Will_Change]
     public function count()
     {
         return $this->count;
     }
-
     /**
      * Return list as array
      *
      * @param int $flag
      * @return array
      */
-    public function toArray($flag = self::EXTR_DATA)
+    public function to_array($flag = self::EXTR_DATA)
     {
         $this->sort();
-
         if ($flag === self::EXTR_BOTH) {
             return $this->items;
         }
-
-        return array_map(
-            static fn (array $item) => $flag === self::EXTR_PRIORITY ? $item['priority'] : $item['data'],
-            $this->items
-        );
+        return array_map(static fn(array $item) => $flag === self::EXTR_PRIORITY ? $item['priority'] : $item['data'], $this->items);
     }
 }

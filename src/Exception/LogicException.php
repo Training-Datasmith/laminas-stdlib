@@ -1,7 +1,6 @@
 <?php
 
-declare(strict_types=1);
-
+declare (strict_types=1);
 namespace Laminas\Stdlib\Exception;
 
 /**
@@ -9,6 +8,6 @@ namespace Laminas\Stdlib\Exception;
  *
  * @final
  */
-class LogicException extends \LogicException implements ExceptionInterface
+class LogicException extends \LogicException implements Exception_Interface
 {
 }

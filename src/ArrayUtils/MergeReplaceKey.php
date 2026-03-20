@@ -1,19 +1,17 @@
 <?php
 
-declare(strict_types=1);
+declare (strict_types=1);
+namespace Laminas\Stdlib\Array_Utils;
 
-namespace Laminas\Stdlib\ArrayUtils;
-
-final class MergeReplaceKey implements MergeReplaceKeyInterface
+final class Merge_Replace_Key implements Merge_Replace_Key_Interface
 {
     public function __construct(protected mixed $data)
     {
     }
-
     /**
      * {@inheritDoc}
      */
-    public function getData()
+    public function get_data()
     {
         return $this->data;
     }

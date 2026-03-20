@@ -1,7 +1,6 @@
 <?php
 
-declare(strict_types=1);
-
+declare (strict_types=1);
 namespace Laminas\Stdlib\Exception;
 
 /**
@@ -9,6 +8,6 @@ namespace Laminas\Stdlib\Exception;
  *
  * @final
  */
-class ExtensionNotLoadedException extends RuntimeException
+class Extension_Not_Loaded_Exception extends RuntimeException
 {
 }
