@@ -23,20 +23,21 @@ abstract class Error_Handler
      */
     protected static $stack = [];
     /**
-     * Check if this error handler is active
+     * Check if this error handler is active (i.e. start() has been called more times than stop()).
      *
-     * @return bool
+     * @return bool True when at least one start() call is pending a matching stop().
      */
-    public static function started()
+    public static function started(): bool
     {
         return (bool) static::get_nested_level();
     }
+
     /**
-     * Get the current nested level
+     * Get the current nesting level (number of unmatched start() calls).
      *
-     * @return int
+     * @return int Number of active error handler frames on the stack.
      */
-    public static function get_nested_level()
+    public static function get_nested_level(): int
     {
         return count(static::$stack);
     }
@@ -59,7 +60,7 @@ abstract class Error_Handler
      * @return null|ErrorException
      * @throws ErrorException If an error has been caught and $throw is true.
      */
-    public static function stop($throw = false)
+    public static function stop(bool $throw = false): ?\ErrorException
     {
         $error_exception = null;
         if (static::$stack) {
