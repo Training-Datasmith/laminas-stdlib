@@ -110,7 +110,7 @@
     </ClassMustBeFinal>
     <DocblockTypeContradiction>
       <code><![CDATA[is_int($priority)]]></code>
-      <code><![CDATA[throw new Exception\InvalidArgumentException("The extract flag specified is not valid")]]></code>
+      <code><![CDATA[throw new Exception\Invalid_Argument_Exception("The extract flag specified is not valid")]]></code>
     </DocblockTypeContradiction>
     <ImplementedReturnTypeMismatch>
       <code><![CDATA[TValue|int|array{data: TValue|false, priority: int|null}|false]]></code>
